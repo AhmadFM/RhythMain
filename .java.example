@@ -1,0 +1,4 @@
+Classes and Interfaces: Use PascalCase (e.g., MainMenuFrame, ScoreResultFrame).
+Methods and Variables: Use camelCase starting with a lowercase letter (e.g., accuracy(), userAge).
+Constants: Use UPPER_SNAKE_CASE with underscores (e.g., MAX_RETRY_ATTEMPTS, PI).
+Packages: Use all lowercase, typically starting with a reverse domain name (e.g., com.company.project.module).

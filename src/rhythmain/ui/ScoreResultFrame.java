@@ -2,21 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package rhythmmain;
+package rhythmain.ui;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import rhythmain.utils.DBConnect;
 /**
  *
  * @author Admin
  */
-public class mainMenuFrame extends javax.swing.JFrame {
+public class ScoreResultFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(mainMenuFrame.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ScoreResultFrame.class.getName());
 
     /**
-     * Creates new form mainMenuFrame
+     * Creates new form ScoreResultFrame
      */
-    String username = "Guest";
-    public mainMenuFrame() {
+    public ScoreResultFrame() {
         initComponents();
     }
 
@@ -29,28 +31,19 @@ public class mainMenuFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel_WelcomeUser = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel_WelcomeUser.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel_WelcomeUser.setText("Hello, "+username+"!");
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(jLabel_WelcomeUser)
-                .addContainerGap(124, Short.MAX_VALUE))
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jLabel_WelcomeUser)
-                .addContainerGap(223, Short.MAX_VALUE))
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -78,10 +71,9 @@ public class mainMenuFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new mainMenuFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ScoreResultFrame().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel_WelcomeUser;
     // End of variables declaration//GEN-END:variables
 }
