@@ -7,6 +7,8 @@ package rhythmain.ui;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import rhythmain.utils.BeatmapReader;
+import rhythmain.utils.Note;
 
 public class MainFrame extends JFrame {
     private CardLayout cardLayout;
@@ -34,6 +36,15 @@ public class MainFrame extends JFrame {
 
         add(mainPanel);
         cardLayout.show(mainPanel, "MainMenu");
+        
+        String json = "[{posisi: 2,timing: 1},{posisi: 1,timing: 3},{posisi: 3,timing: 4}]";
+        BeatmapReader bacaNote = new BeatmapReader();
+        Note[] daftarNote = bacaNote.bacaBeatMap(json);
+        
+        for(int i = 0; i < daftarNote.length; i++) {
+            Note satuan = daftarNote[i];
+            System.out.println("Posisi note:" + satuan.posisi + "timing note:" + satuan.timing);
+        }
     }
 
     // Fungsi untuk berpindah antar layar/frame
