@@ -6,6 +6,7 @@ package rhythmain.ui;
 
 import java.awt.*;
 import javax.swing.*;
+import rhythmain.audio.AudioPlayer;
 
 public class MainMenuPanel extends JPanel {
     private MainFrame mainFrame;
@@ -41,9 +42,13 @@ public class MainMenuPanel extends JPanel {
         gbc.gridy = 2;
         add(playButton, gbc);
         playButton.addActionListener(e -> {
-            // Logic buat navigasi ke modul Song Selection 
-            // mainFrame.switchPanel("SongSelection");
-            JOptionPane.showMessageDialog(this, "Navigasi ke Pemilihan Lagu (Modul A2)");
+            // instansiasi audioPlayer dari MainFrame
+            AudioPlayer player = mainFrame.getBgmPlayer();
+            // muat file audio .wav yang udh ada di folder assets
+            player.loadAudio("assets/songs/Chill Pulse - Jingle Bell Rock (freetouse.com).wav");
+            player.play();
+            
+            JOptionPane.showMessageDialog(this, "Musik Dimulai! Navigasi pemilihan lagu");
         });
 
         // 4. Tombol ACCOUNT
@@ -60,6 +65,13 @@ public class MainMenuPanel extends JPanel {
         JButton settingsButton = createMenuButton("SETTINGS");
         gbc.gridy = 4;
         add(settingsButton, gbc);
+        
+        JButton stopButton = createMenuButton("STOP MUSIC");
+        gbc.gridy = 6;
+        add(stopButton, gbc);
+        stopButton.addActionListener(e -> {
+            mainFrame.getBgmPlayer().stop();
+        });
 
         // 6. Tombol EXIT
         JButton exitButton = createMenuButton("EXIT");

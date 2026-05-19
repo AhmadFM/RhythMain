@@ -7,12 +7,14 @@ package rhythmain.ui;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import rhythmain.audio.AudioPlayer;
 import rhythmain.utils.BeatmapReader;
 import rhythmain.utils.Note;
 
 public class MainFrame extends JFrame {
     private CardLayout cardLayout;
     private JPanel mainPanel;
+    private AudioPlayer bgmPlayer;
 
     public MainFrame() {
         setTitle("RhythMain - Rhythm Game Desktop"); 
@@ -20,6 +22,8 @@ public class MainFrame extends JFrame {
         setSize(800, 600); // Ukuran standar resolusi window game
         setLocationRelativeTo(null); // Membuat window muncul di tengah layar
         setResizable(false);
+        
+        bgmPlayer = new AudioPlayer();
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -44,10 +48,17 @@ public class MainFrame extends JFrame {
         for(int i = 0; i < daftarNote.length; i++) {
             Note satuan = daftarNote[i];
             System.out.println("Posisi note:" + satuan.posisi + "timing note:" + satuan.timing);
+            
+        AudioPlayer player = new AudioPlayer();
+        player.loadAudio("assets/songs/Chill Pulse - Jingle Bell Rock (freetouse.com).wav");
         }
     }
 
     // Fungsi untuk berpindah antar layar/frame
+    public AudioPlayer getBgmPlayer() {
+        return bgmPlayer;
+    }
+        
     public void switchPanel(String panelName) {
         cardLayout.show(mainPanel, panelName);
     }
