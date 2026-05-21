@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import rhythmain.audio.AudioPlayer;
 import rhythmain.utils.BeatmapReader;
 import rhythmain.utils.Note;
 
@@ -33,18 +34,19 @@ class NoteSenar {
  */
 public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameplayFrame.class.getName());
+    // Skor game.
+    int skor = 0;
+    
+    // Untuk memainkan musik.
+    AudioPlayer audioPlayer = new AudioPlayer();
     
     private int senarButtonY;
-    
     Queue<NoteSenar> daftarNoteSenarD = new LinkedList();
     Queue<NoteSenar> daftarNoteSenarF = new LinkedList();
     Queue<NoteSenar> daftarNoteSenarJ = new LinkedList();
     Queue<NoteSenar> daftarNoteSenarK = new LinkedList();
-
-    /**
-     * Creates new form GameplayFrame
-     */
+    
+    
     public GameplayFrame() {
         initComponents();
         addKeyListener(this);
@@ -52,10 +54,9 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         setFocusTraversalKeysEnabled(true);
         
         senarButtonY = senarD.getSize().height;
-        System.out.println("Column Button Y: " + senarButtonY);
         
         noteInfoText.setVisible(false);
-        
+
         bacaBeatmap();
         mulaiGame();
     }
@@ -76,6 +77,10 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     }
     
     private void mulaiGame() {
+        // Mainkan lagu.
+        audioPlayer.loadAudio("assets/songs/Aylex - Last Summer (freetouse.com).wav");
+        audioPlayer.play();
+        
         Timer mainLoop = new Timer(16, e -> {
             prosesNotePadaSenar(senarD, daftarNoteSenarD);
             prosesNotePadaSenar(senarF, daftarNoteSenarF);
@@ -166,6 +171,8 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
            ((Timer)e.getSource()).stop();
         });
         timer.start();
+        
+        ubahSkor(10);
     }
     
     private void noteApabilaOffbeat(JPanel senar) {
@@ -179,6 +186,8 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
            ((Timer)e.getSource()).stop();
         });
         timer.start();
+        
+        ubahSkor(-5);
     }
     
     private void noteApabilaMiss(JPanel senar) {
@@ -192,6 +201,13 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
            ((Timer)e.getSource()).stop();
         });
         timer.start();
+        
+        ubahSkor(-10);
+    }
+    
+    private void ubahSkor(int berapa) {
+        skor += berapa;
+        skorText.setText("Skor: " + skor);
     }
 
     /**
@@ -207,6 +223,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         jPanel6 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         noteInfoText = new javax.swing.JLabel();
+        skorText = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -240,6 +257,10 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         noteInfoText.setForeground(new java.awt.Color(255, 255, 255));
         noteInfoText.setText("Perfect");
 
+        skorText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        skorText.setForeground(new java.awt.Color(255, 255, 255));
+        skorText.setText("Skor: 0");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -248,11 +269,17 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
                 .addGap(383, 383, 383)
                 .addComponent(noteInfoText)
                 .addContainerGap(384, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(skorText)
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(468, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(skorText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
                 .addComponent(noteInfoText)
                 .addGap(56, 56, 56))
         );
@@ -548,6 +575,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     private javax.swing.JPanel senarJButton;
     private javax.swing.JPanel senarK;
     private javax.swing.JPanel senarKButton;
+    private javax.swing.JLabel skorText;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -557,6 +585,10 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
         System.out.println("Key pressed");
         switch (e.getKeyCode()) {
             case KeyEvent.VK_D -> {
@@ -572,10 +604,8 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
                 cekNoteApakahKena(senarK, daftarNoteSenarK);
             }
         }
-    }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        
     }
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ScoreResultFrame.class.getName());
 }
