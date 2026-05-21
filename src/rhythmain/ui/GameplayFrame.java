@@ -5,6 +5,7 @@
 package rhythmain.ui;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
@@ -14,6 +15,7 @@ import javax.swing.Timer;
 import rhythmain.audio.AudioPlayer;
 import rhythmain.utils.BeatmapReader;
 import rhythmain.utils.Note;
+import rhythmain.utils.ScoreManager;
 
 
 class NoteSenar {
@@ -39,6 +41,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     
     // Untuk memainkan musik.
     AudioPlayer audioPlayer = new AudioPlayer();
+    ScoreManager scoreManager = new ScoreManager();
     
     private int senarButtonY;
     Queue<NoteSenar> daftarNoteSenarD = new LinkedList();
@@ -52,12 +55,16 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(true);
+        setLocationRelativeTo(null);
         
+        // Ambil posisi button tiap senar (tapi ambil dari senar D aja).
         senarButtonY = senarD.getSize().height;
-        
+        // Sembunyikan noteInfoText (Teks informasi buat Perfect, Miss, Offbeat)
         noteInfoText.setVisible(false);
 
+        // Baca beatmap.
         bacaBeatmap();
+        // Mulai game.
         mulaiGame();
     }
     
@@ -81,6 +88,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         audioPlayer.loadAudio("assets/songs/Aylex - Last Summer (freetouse.com).wav");
         audioPlayer.play();
         
+        // Jalankan looping.
         Timer mainLoop = new Timer(16, e -> {
             prosesNotePadaSenar(senarD, daftarNoteSenarD);
             prosesNotePadaSenar(senarF, daftarNoteSenarF);
@@ -180,12 +188,32 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         noteInfoText.setText("Offbeat");
         noteInfoText.setVisible(true);
         
-        Timer timer = new Timer(250, e -> {
+        var bungkusVariabel = new Object(){ int jogetKeBerapa = 1; };
+        Timer timerWindowJoget = new Timer(25, e -> {
+            Point posisiWindow = this.getLocation();
+            
+            int kePosisiX = posisiWindow.x;
+            if (bungkusVariabel.jogetKeBerapa % 2 == 0) {
+                kePosisiX += 10;
+            } else {
+                kePosisiX -= 10;
+            }
+                    
+            this.setLocation(kePosisiX, posisiWindow.y);
+            
+            if (bungkusVariabel.jogetKeBerapa == 15) {
+                ((Timer)e.getSource()).stop();
+            }
+            bungkusVariabel.jogetKeBerapa++;
+        });
+        Timer timerTextDanSenar = new Timer(250, e -> {
            senar.setBackground(Color.black);
            noteInfoText.setVisible(false);
            ((Timer)e.getSource()).stop();
         });
-        timer.start();
+        
+        timerWindowJoget.start();
+        timerTextDanSenar.start();
         
         ubahSkor(-5);
     }
