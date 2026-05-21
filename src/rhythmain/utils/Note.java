@@ -9,6 +9,10 @@ package rhythmain.utils;
  * @author gante
  */
 public class Note {
-    public int timing;
+    public float timing;
     public int posisi;
+    
+    public String hitSound;
 }
+
+

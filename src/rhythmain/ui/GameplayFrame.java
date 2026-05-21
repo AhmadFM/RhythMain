@@ -66,7 +66,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         Note[] notes = beatmapReader.bacaBeatMap("[ { posisi: 1, timing: 1 }, { posisi: 2, timing: 1 }, { posisi: 4, timing: 3 } ]");
         
         for (Note note : notes) {
-            Timer timer = new Timer(note.timing * 1000, e -> {
+            Timer timer = new Timer((int)(note.timing * 1000), e -> {
                 try {
                     tambahNote(note);
                 } catch (Exception ex) {}
