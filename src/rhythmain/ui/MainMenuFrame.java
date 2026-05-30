@@ -4,6 +4,11 @@
  */
 package rhythmain.ui;
 
+import javax.swing.JOptionPane;
+import rhythmain.audio.AudioPlayer;
+import rhythmain.utils.BeatmapReader;
+import rhythmain.utils.Note;
+
 /**
  *
  * @author gante
@@ -11,12 +16,18 @@ package rhythmain.ui;
 public class MainMenuFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainMenuFrame.class.getName());
-
+    private AudioPlayer bgmPlayer;
     /**
      * Creates new form MainMenuFrame
      */
     public MainMenuFrame() {
         initComponents();
+        
+        setTitle("RhythMain - Rhyth Game Dekstop");
+        setLocationRelativeTo(null);
+        setResizable(false);
+        
+        bgmPlayer = new AudioPlayer();
     }
 
     /**
@@ -35,6 +46,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
         accountButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        stopButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -70,32 +82,37 @@ public class MainMenuFrame extends javax.swing.JFrame {
         exitButton.setText("EXIT");
         exitButton.addActionListener(this::exitButtonActionPerformed);
 
+        stopButton.setBackground(new java.awt.Color(242, 242, 242));
+        stopButton.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        stopButton.setText("STOP");
+        stopButton.addActionListener(this::stopButtonActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(177, 177, 177)
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
+                .addGap(127, 127, 127)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(judul)
-                        .addGap(112, 112, 112))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel2)
+                        .addGap(39, 39, 39))
+                    .addComponent(judul, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(accountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(139, 139, 139))))
+                            .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(42, 42, 42)
                 .addComponent(judul)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
@@ -107,7 +124,9 @@ public class MainMenuFrame extends javax.swing.JFrame {
                 .addComponent(settingsButton)
                 .addGap(18, 18, 18)
                 .addComponent(exitButton)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(stopButton)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,24 +147,55 @@ public class MainMenuFrame extends javax.swing.JFrame {
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         // TODO add your handling code here:
+        String json = "[{posisi: 2, timing: 1}, {posisi: 1,timing: 3},{posisi: 3,timing: 4}]";
+        BeatmapReader bacaNote = new BeatmapReader();
+        Note[] daftarNote = bacaNote.bacaBeatMap(json);
+        
+        for (int i = 0; i < daftarNote.length; i++){
+            Note satuan = daftarNote[i];
+            System.out.println("Posisi note: " + satuan.posisi + " | timing note: " + satuan.timing);
+        }
+        
+        bgmPlayer.loadAudio("assets/songs/Chill Pulse - Jingle Bell Rock (freetouse.com).wav");
+        bgmPlayer.play();
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Musik dimulai! Memproses data lagu");
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void accountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountButtonActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Navigasi ke menu akun");
     }//GEN-LAST:event_accountButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Navigasi ke menu pengaturan");
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         // TODO add your handling code here:
+        if (bgmPlayer != null) {
+            bgmPlayer.stop();
+        }
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+        // TODO add your handling code here:
+        if (bgmPlayer != null){
+            bgmPlayer.stop();
+            javax.swing.JOptionPane.showMessageDialog(this, "Musik dihentikan");
+        }
+    }//GEN-LAST:event_stopButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    
+    public AudioPlayer getBgmPlayer(){
+        return bgmPlayer;
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -176,5 +226,6 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private javax.swing.JLabel judul;
     private javax.swing.JButton playButton;
     private javax.swing.JButton settingsButton;
+    private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables
 }
