@@ -1,0 +1,2482 @@
+[
+    {
+        "posisi": 2,
+        "timing": 0.16,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 2.434,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 4.709,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 6.984,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 9.259,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 11.534,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 13.809,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 15.515,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 17.648,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 18.359,
+        "hitsound": "LR_TomR2.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 18.359,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 18.927,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 19.496,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 20.065,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 20.633,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 21.202,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 21.771,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 22.34,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 22.908,
+        "hitsound": "LR_TomR1.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 22.908,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 23.477,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 24.046,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 24.614,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 24.899,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 25.183,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 26.605,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 26.889,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 27.174,
+        "hitsound": "LR_TomR1.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 27.458,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 27.458,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 28.027,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 28.596,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 29.164,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 29.733,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 30.302,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 30.87,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 31.439,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 32.008,
+        "hitsound": "LR_TomR1.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 32.008,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 32.577,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 33.145,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 33.714,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 33.998,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 34.283,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 34.851,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 35.136,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 35.989,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 36.273,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 36.558,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 37.126,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 37.126,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 37.411,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 37.695,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 37.979,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 38.264,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 38.548,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 38.832,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 39.117,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 39.401,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 39.686,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 39.97,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 40.254,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 40.539,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 40.823,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 41.107,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 41.107,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 41.676,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 41.96,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 42.245,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 42.529,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 42.814,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 43.098,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 43.382,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 43.667,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 43.951,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 44.235,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 44.52,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 44.804,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 45.088,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 45.373,
+        "hitsound": "LR_TomR3.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 45.657,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 45.657,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 45.941,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 46.226,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 46.51,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 46.795,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 47.079,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 47.363,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 47.648,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 47.932,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 47.932,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 48.216,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 48.501,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 48.785,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 49.069,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 49.354,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 49.638,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 49.923,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 50.207,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 50.207,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 50.776,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 50.776,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 51.06,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 51.344,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 51.629,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 51.913,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 52.197,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 52.482,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 52.482,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 52.766,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 53.05,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 53.335,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 53.335,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 53.619,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 53.619,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 53.904,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 53.904,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 54.188,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 54.757,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 55.325,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 55.894,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 56.463,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 56.747,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 57.032,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 57.6,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 57.885,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 58.169,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 58.453,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 58.738,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 59.022,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 59.306,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 59.875,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 60.16,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 60.444,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 60.728,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 61.013,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 61.297,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 61.581,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 62.15,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 62.434,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 62.719,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 63.003,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 63.287,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 63.856,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 64.425,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 64.994,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 65.562,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 65.847,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 65.989,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 66.131,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 66.7,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 66.984,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 67.126,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 67.269,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 67.553,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 67.837,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 68.122,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 68.406,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 68.975,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 69.259,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 69.543,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 69.828,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 70.112,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 70.396,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 70.539,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 70.681,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 71.25,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 71.534,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 71.818,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 72.103,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 72.387,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 72.956,
+        "hitsound": "BassKickReverbXD_s.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 73.524,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 74.093,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 74.662,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 75.231,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 75.799,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 76.368,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 76.937,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 77.505,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 78.074,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 78.643,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 79.212,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 79.496,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 79.78,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 81.202,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 81.487,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 81.771,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 82.055,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 82.624,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 83.193,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 83.761,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 84.33,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 84.899,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 85.468,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 86.036,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 86.321,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 86.605,
+        "hitsound": "LR_TomR1.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 87.174,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 87.742,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 88.311,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 88.596,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 88.88,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 89.733,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 90.017,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 90.302,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 90.586,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 90.87,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 91.155,
+        "hitsound": "LR_TomR1.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 91.155,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 91.723,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 92.008,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 92.292,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 92.861,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 93.145,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 93.43,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 93.43,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 93.998,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 94.283,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 94.567,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 95.136,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 95.42,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 95.705,
+        "hitsound": "LR_TomR1.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 95.705,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 96.273,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 96.558,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 96.842,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 97.126,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 97.695,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 97.979,
+        "hitsound": "LR_TomR.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 97.979,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 98.832,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 99.117,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 99.401,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 99.686,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 99.97,
+        "hitsound": "LR_TomR3.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 100.254,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 100.254,
+        "hitsound": "LR_Snare Drum 2.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 100.823,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 101.107,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 101.392,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 101.392,
+        "hitsound": "LR_Snare Drum 2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 101.96,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 102.245,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 102.529,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 102.529,
+        "hitsound": "LR_Snare Drum 2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 103.098,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 103.382,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 103.667,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 103.667,
+        "hitsound": "LR_Snare Drum 2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 103.951,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 104.235,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 104.52,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 104.804,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 104.804,
+        "hitsound": "LR_Snare Drum 2.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 105.373,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 105.373,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 105.941,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 105.941,
+        "hitsound": "LR_Snare Drum 2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 106.51,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 106.51,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 106.795,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 107.079,
+        "hitsound": "LR_Snare Drum 2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 107.363,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 107.648,
+        "hitsound": "tick2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 107.932,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 108.216,
+        "hitsound": "LR_Snare Drum 2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 108.359,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 108.501,
+        "hitsound": "tick.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 108.785,
+        "hitsound": "LS-HKI Big Kick 09.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 109.069,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 109.354,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 109.354,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 109.923,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 110.207,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 110.491,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 110.776,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 111.06,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 111.344,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 111.629,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 111.913,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 112.197,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 112.482,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 112.766,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 113.05,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 113.335,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 113.619,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 113.904,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 113.904,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 114.472,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 114.757,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 115.041,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 115.325,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 115.61,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 115.894,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 116.178,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 116.463,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 116.747,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 117.032,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 117.316,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 117.6,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 117.885,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 118.169,
+        "hitsound": "LR_TomR3.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 118.453,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 118.453,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 118.738,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 119.022,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 119.306,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 119.591,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 119.875,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 120.16,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 120.444,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 120.728,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 120.728,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 121.013,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 121.297,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 121.581,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 121.866,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 122.15,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 122.434,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 122.719,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 123.003,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 123.003,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 123.287,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 123.572,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 123.856,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 124.141,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 124.425,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 124.709,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 124.851,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 124.994,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 125.278,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 125.278,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 125.562,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 125.847,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 126.131,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 126.415,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 126.7,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 126.984,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 127.269,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 127.553,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 127.553,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 128.122,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 128.406,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 128.69,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 128.69,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 128.975,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 128.975,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 129.259,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 129.543,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 129.828,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 129.828,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 130.396,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 130.681,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 130.965,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 130.965,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 131.25,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 131.25,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 131.534,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 131.818,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 132.103,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 132.103,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 132.671,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 132.956,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 133.24,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 133.524,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 133.809,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 134.093,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 134.378,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 134.378,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 134.946,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 135.231,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 135.515,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 135.799,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 136.084,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 136.368,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 136.652,
+        "hitsound": "BassKickReverbXD_s.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 137.221,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 137.505,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 137.79,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 138.359,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 138.643,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 138.927,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 139.212,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 139.496,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 139.78,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 140.065,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 140.349,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 140.633,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 140.918,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 1,
+        "timing": 141.202,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 142.055,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 142.34,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 142.624,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 143.477,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 4,
+        "timing": 144.33,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 144.614,
+        "hitsound": "clap2.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 144.899,
+        "hitsound": "clap.wav"
+    },
+    {
+        "posisi": 3,
+        "timing": 145.468,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 145.752,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 145.752,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 146.036,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 146.321,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 146.747,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 147.032,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 147.174,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 147.458,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 148.027,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 148.311,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 148.596,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 149.022,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 149.306,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 149.449,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 149.733,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 150.017,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 150.302,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 150.586,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 150.87,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 151.297,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 151.581,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 151.723,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 152.008,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 152.292,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 152.577,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 152.861,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 153.145,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 153.43,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 153.572,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 153.856,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 153.998,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 154.283,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 154.851,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 155.136,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 155.42,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 155.847,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 156.131,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 156.273,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 156.558,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 157.126,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 157.411,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 157.695,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 158.122,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 158.406,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 158.548,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 158.832,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 159.117,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 159.401,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 159.686,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 159.97,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 160.396,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 160.681,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 160.823,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 161.107,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 161.392,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 161.676,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 161.96,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 162.245,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 162.529,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 162.671,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 162.956,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 163.098,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 163.382,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 163.951,
+        "hitsound": "BassKickReverbXD_s.wav"
+    },
+    {
+        "posisi": 2,
+        "timing": 163.951,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 164.52,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 165.088,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 165.657,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 166.226,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 166.795,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 167.363,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 167.932,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 168.501,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 169.069,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 169.638,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 170.207,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 170.776,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 171.344,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 171.913,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 172.482,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 173.05,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 173.619,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 174.188,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 174.757,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 175.325,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 175.894,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 176.463,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 177.032,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 177.6,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 178.169,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 178.738,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 4,
+        "timing": 179.306,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 179.875,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 180.444,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 1,
+        "timing": 181.013,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 3,
+        "timing": 181.581,
+        "hitsound": "default"
+    },
+    {
+        "posisi": 2,
+        "timing": 181.866,
+        "hitsound": "clap2.wav"
+    }
+]
