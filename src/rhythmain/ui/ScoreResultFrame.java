@@ -140,7 +140,7 @@ public class ScoreResultFrame extends javax.swing.JFrame {
                     .addComponent(jLabel_missCount)
                     .addComponent(jLabel_comboCount)
                     .addComponent(jLabel_accuracy))
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
         jPanel_StatsLayout.setVerticalGroup(
             jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
