@@ -19,6 +19,8 @@ import java.util.Queue;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import rhythmain.audio.AudioPlayer;
+import rhythmain.dao.BeatmapDAO;
+import rhythmain.model.Song;
 import rhythmain.utils.BeatmapReader;
 import rhythmain.utils.Note;
 import rhythmain.utils.ScoreManager;
@@ -41,6 +43,10 @@ class NoteSenar {
  * @author Fadhil
  */
 public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
+    // Informasi penting.
+    Song song;
+    String difficulty;
+    
     // Skor game.
     int skor = 0;
     // Kecepatan note.
@@ -61,12 +67,15 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     
     
     
-    public GameplayFrame() {
+    public GameplayFrame(Song song, String difficulty) {
         initComponents();
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(true);
         setLocationRelativeTo(null);
+        
+        this.song = song;
+        this.difficulty = difficulty;
         
         // Ambil posisi button tiap senar (tapi ambil dari senar D aja).
         senarButtonY = senarD.getSize().height;
@@ -80,15 +89,13 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     }
     
     private void bacaBeatmap() {
-        String content = "";
-        try {
-            content = Files.readString(Path.of("assets/songs/a/BilliumMoto - 1xMISS (FAMoss) [EXCELLENT].json"));
-        } catch (IOException ex) {
-            System.getLogger(GameplayFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        // Ambil beatmap dari database.
+        BeatmapDAO koneksiDatabase = new BeatmapDAO();
+        String beatmapJson = koneksiDatabase.getBeatmap(song.getSongId(), difficulty);
+
         // Baca beatmap.
         BeatmapReader beatmapReader = new BeatmapReader();
-        Note[] notes = beatmapReader.bacaBeatMap(content);
+        Note[] notes = beatmapReader.bacaBeatMap(beatmapJson);
         // Urutkan beatmap berdasarkan timing yang paling awal.
         Arrays.sort(notes, Comparator.comparingDouble(note -> note.timing));
         
@@ -604,31 +611,6 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GameplayFrame().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
