@@ -4,7 +4,9 @@
  */
 package rhythmain.ui;
 
+import java.awt.CardLayout;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import rhythmain.audio.AudioPlayer;
 import rhythmain.utils.BeatmapReader;
 import rhythmain.utils.Note;
@@ -16,7 +18,12 @@ import rhythmain.utils.Note;
 public class MainMenuFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainMenuFrame.class.getName());
+    
+    // buat manajemen navigasi (card layout)
+    private CardLayout cardLayout;
+    private JPanel mainContainer;
     private AudioPlayer bgmPlayer;
+    private String panelName;
     /**
      * Creates new form MainMenuFrame
      */
@@ -28,8 +35,23 @@ public class MainMenuFrame extends javax.swing.JFrame {
         setResizable(false);
         
         bgmPlayer = new AudioPlayer();
+        cardLayout = new CardLayout();
+        mainContainer = new JPanel(cardLayout);
+        
+        mainContainer.add(jPanel1, "MainMenuPanel");
+        
+        setContentPane(mainContainer);
+        cardLayout.show(mainContainer, "MainMenuPanel");
     }
-
+    
+    public void switchPanel(String panelName){
+        cardLayout.show(mainContainer, panelName);
+    }
+    
+    public AudioPlayer getBgmPlayer() {
+        return bgmPlayer;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,22 +166,10 @@ public class MainMenuFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         // TODO add your handling code here:
-        String json = "[{posisi: 2, timing: 1}, {posisi: 1,timing: 3},{posisi: 3,timing: 4}]";
-        BeatmapReader bacaNote = new BeatmapReader();
-        Note[] daftarNote = bacaNote.bacaBeatMap(json);
-        
-        for (int i = 0; i < daftarNote.length; i++){
-            Note satuan = daftarNote[i];
-            System.out.println("Posisi note: " + satuan.posisi + " | timing note: " + satuan.timing);
-        }
-        
-        bgmPlayer.loadAudio("assets/songs/Chill Pulse - Jingle Bell Rock (freetouse.com).wav");
-        bgmPlayer.play();
-        
-        javax.swing.JOptionPane.showMessageDialog(this, "Musik dimulai! Memproses data lagu");
+                
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void accountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountButtonActionPerformed
@@ -192,10 +202,6 @@ public class MainMenuFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     
-    public AudioPlayer getBgmPlayer(){
-        return bgmPlayer;
-    }
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -215,6 +221,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(() -> new MainMenuFrame().setVisible(true));
     }
 

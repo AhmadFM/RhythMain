@@ -43,6 +43,13 @@ public class SongSelectionPanel extends javax.swing.JFrame {
         // Load semua lagu pertama kali
         loadSongs("");
     }
+    
+    private MainMenuFrame mainFrame;
+    
+    public SongSelectionPanel(MainMenuFrame mainFrame){
+        this.mainFrame = mainFrame;
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
