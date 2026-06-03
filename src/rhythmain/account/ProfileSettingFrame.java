@@ -25,18 +25,12 @@ public class ProfileSettingFrame extends javax.swing.JFrame {
         initComponents();
 
         txtUsername.setEditable(false);
-        txtEmail.setEditable(false);
         txtPassword.setEditable(false);
 
         txtUsername.setFocusable(false);
-        txtEmail.setFocusable(false);
         txtPassword.setFocusable(false);
 
         txtUsername.setCaretColor(
-                new java.awt.Color(0, 0, 0, 0)
-        );
-
-        txtEmail.setCaretColor(
                 new java.awt.Color(0, 0, 0, 0)
         );
 
@@ -62,9 +56,7 @@ public class ProfileSettingFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
-        txtEmail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         lblResetPassword = new javax.swing.JLabel();
         back = new javax.swing.JLabel();
@@ -101,32 +93,16 @@ public class ProfileSettingFrame extends javax.swing.JFrame {
         });
         mainPanel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 145, 500, 45));
 
-        txtEmail.setBackground(new java.awt.Color(58, 64, 75));
-        txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtEmail.setForeground(new java.awt.Color(54, 247, 250));
-        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
-            }
-        });
-        mainPanel.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 500, 45));
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Password");
-        mainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Email");
-        mainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
+        mainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, -1, -1));
 
         txtPassword.setBackground(new java.awt.Color(58, 64, 75));
         txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtPassword.setForeground(new java.awt.Color(54, 247, 250));
         txtPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        mainPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 325, 500, 45));
+        mainPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 500, 45));
 
         lblResetPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblResetPassword.setForeground(new java.awt.Color(54, 247, 250));
@@ -137,7 +113,7 @@ public class ProfileSettingFrame extends javax.swing.JFrame {
                 lblResetPasswordMouseClicked(evt);
             }
         });
-        mainPanel.add(lblResetPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, -1, -1));
+        mainPanel.add(lblResetPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 310, -1, -1));
 
         back.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         back.setForeground(new java.awt.Color(255, 255, 255));
@@ -167,10 +143,6 @@ public class ProfileSettingFrame extends javax.swing.JFrame {
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
-
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
 
     private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
         // TODO add your handling code here:
@@ -210,10 +182,6 @@ public class ProfileSettingFrame extends javax.swing.JFrame {
 
                 txtUsername.setText(
                         rs.getString("username")
-                );
-
-                txtEmail.setText(
-                        rs.getString("email")
                 );
 
                 txtPassword.setText(
@@ -287,11 +255,9 @@ public class ProfileSettingFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblResetPassword;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

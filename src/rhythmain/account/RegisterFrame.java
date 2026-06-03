@@ -38,8 +38,6 @@ public class RegisterFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         btnRegister = new javax.swing.JButton();
@@ -66,24 +64,10 @@ public class RegisterFrame extends javax.swing.JFrame {
         txtUsername.setPreferredSize(new java.awt.Dimension(64, 24));
         jPanel1.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 145, 500, 45));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Email");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 330, -1));
-
-        txtEmail.setBackground(new java.awt.Color(56, 61, 69));
-        txtEmail.setForeground(new java.awt.Color(54, 247, 250));
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 500, 45));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Password");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 330, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 330, -1));
 
         txtPassword.setBackground(new java.awt.Color(56, 61, 69));
         txtPassword.setForeground(new java.awt.Color(54, 247, 250));
@@ -92,7 +76,7 @@ public class RegisterFrame extends javax.swing.JFrame {
                 txtPasswordActionPerformed(evt);
             }
         });
-        jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 500, 45));
+        jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 500, 45));
 
         btnRegister.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnRegister.setText("REGISTER");
@@ -101,7 +85,7 @@ public class RegisterFrame extends javax.swing.JFrame {
                 btnRegisterActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 390, 100, 30));
+        jPanel1.add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 310, 100, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(54, 247, 250));
@@ -150,15 +134,14 @@ public class RegisterFrame extends javax.swing.JFrame {
             Connection conn = koneksi.con;
 
             String sql
-                    = "INSERT INTO users(username,email,password) VALUES(?,?,?)";
+                    = "INSERT INTO users(username,password) VALUES(?,?)";
 
             PreparedStatement pst
                     = conn.prepareStatement(sql);
 
             pst.setString(1, txtUsername.getText());
-            pst.setString(2, txtEmail.getText());
             pst.setString(
-                    3,
+                    2,
                     txtPassword.getText()
             );
 
@@ -187,10 +170,6 @@ public class RegisterFrame extends javax.swing.JFrame {
             );
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
-
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
         // TODO add your handling code here:
@@ -232,12 +211,10 @@ public class RegisterFrame extends javax.swing.JFrame {
     private javax.swing.JLabel btnLogin;
     private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

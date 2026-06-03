@@ -5,8 +5,15 @@
 package rhythmain.ui;
 
 import java.awt.Color;
+import java.util.Arrays;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import javax.swing.JPanel;
@@ -14,6 +21,7 @@ import javax.swing.Timer;
 import rhythmain.audio.AudioPlayer;
 import rhythmain.utils.BeatmapReader;
 import rhythmain.utils.Note;
+import rhythmain.utils.ScoreManager;
 
 
 class NoteSenar {
@@ -33,18 +41,24 @@ class NoteSenar {
  * @author Fadhil
  */
 public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
-    
     // Skor game.
     int skor = 0;
+    // Kecepatan note.
+    int kecepatanNote = 4;
+    // Waktu kapan game pertama kali dimulai.
+    long startTime;
     
     // Untuk memainkan musik.
     AudioPlayer audioPlayer = new AudioPlayer();
+    ScoreManager scoreManager = new ScoreManager();
     
     private int senarButtonY;
+    Queue<Note> daftarNoteBelumDitambahkan = new LinkedList();
     Queue<NoteSenar> daftarNoteSenarD = new LinkedList();
     Queue<NoteSenar> daftarNoteSenarF = new LinkedList();
     Queue<NoteSenar> daftarNoteSenarJ = new LinkedList();
     Queue<NoteSenar> daftarNoteSenarK = new LinkedList();
+    
     
     
     public GameplayFrame() {
@@ -52,56 +66,91 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(true);
+        setLocationRelativeTo(null);
         
+        // Ambil posisi button tiap senar (tapi ambil dari senar D aja).
         senarButtonY = senarD.getSize().height;
-        
+        // Sembunyikan noteInfoText (Teks informasi buat Perfect, Miss, Offbeat)
         noteInfoText.setVisible(false);
 
+        // Baca beatmap.
         bacaBeatmap();
+        // Mulai game.
         mulaiGame();
     }
     
     private void bacaBeatmap() {
+        String content = "";
+        try {
+            content = Files.readString(Path.of("assets/songs/a/BilliumMoto - 1xMISS (FAMoss) [EXCELLENT].json"));
+        } catch (IOException ex) {
+            System.getLogger(GameplayFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        // Baca beatmap.
         BeatmapReader beatmapReader = new BeatmapReader();
-        Note[] notes = beatmapReader.bacaBeatMap("[ { posisi: 1, timing: 1 }, { posisi: 2, timing: 1 }, { posisi: 4, timing: 3 } ]");
+        Note[] notes = beatmapReader.bacaBeatMap(content);
+        // Urutkan beatmap berdasarkan timing yang paling awal.
+        Arrays.sort(notes, Comparator.comparingDouble(note -> note.timing));
         
+        // Tambahkan semua note ke Queue daftar note.
         for (Note note : notes) {
-            Timer timer = new Timer((int)(note.timing * 1000), e -> {
-                try {
-                    tambahNote(note);
-                } catch (Exception ex) {}
-                ((Timer)e.getSource()).stop();
-            });
-            timer.start();
+            daftarNoteBelumDitambahkan.add(note);
         }
     }
     
     private void mulaiGame() {
         // Mainkan lagu.
-        audioPlayer.loadAudio("assets/songs/Aylex - Last Summer (freetouse.com).wav");
+        audioPlayer.loadAudio("assets/songs/a/audio.wav");
         audioPlayer.play();
         
+        // Simpan waktu pertama kali game dimulai.
+        startTime = System.currentTimeMillis();
+        
+        // Jalankan looping.
         Timer mainLoop = new Timer(16, e -> {
+            cekQueueNote();
             prosesNotePadaSenar(senarD, daftarNoteSenarD);
             prosesNotePadaSenar(senarF, daftarNoteSenarF);
             prosesNotePadaSenar(senarJ, daftarNoteSenarJ);
             prosesNotePadaSenar(senarK, daftarNoteSenarK);
         });
-        mainLoop.start();
+        mainLoop.start(); 
     }
     
-    private void prosesNotePadaSenar(JPanel senar, Queue<NoteSenar> daftarNoteSenar) {
-        for (NoteSenar columnNote : daftarNoteSenar) {
-            columnNote.y += 2;
+    private void cekQueueNote() {
+        float elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000.0f;
+        
+        while (!daftarNoteBelumDitambahkan.isEmpty()) {
+            Note notePertama = daftarNoteBelumDitambahkan.peek();
             
-            if (columnNote.y >= senarButtonY + 15) {
-                senar.remove(columnNote.component);
+            if (elapsedSeconds >= notePertama.timing) {
+                System.out.println("Tambah note karena sudah waktunya.");
+                daftarNoteBelumDitambahkan.remove(notePertama);
+                try {
+                    tambahNote(notePertama);
+                } catch (Exception ex) {
+                    System.getLogger(GameplayFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+            } else {
+                break;
+            }
+        }
+    };
+    
+    private void prosesNotePadaSenar(JPanel senar, Queue<NoteSenar> daftarNoteSenar) {
+        Iterator<NoteSenar> iterator = daftarNoteSenar.iterator();
+        while (iterator.hasNext()) {
+            NoteSenar noteSenar = iterator.next();
+            noteSenar.y += kecepatanNote;
+            
+            if (noteSenar.y >= senarButtonY + 15) {
+                senar.remove(noteSenar.component);
                 senar.revalidate();
                 senar.repaint();
-                daftarNoteSenar.remove(columnNote);
+                iterator.remove();
                 noteApabilaMiss(senar);
             } else {
-                columnNote.component.setLocation(0, columnNote.y);
+                noteSenar.component.setLocation(0, noteSenar.y);
             }
         }
     }
@@ -172,6 +221,10 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         });
         timer.start();
         
+        AudioPlayer soundEffect = new AudioPlayer();
+        soundEffect.loadAudio("assets/songs/a/clap (fixed).wav");
+        soundEffect.play();
+        
         ubahSkor(10);
     }
     
@@ -180,12 +233,36 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         noteInfoText.setText("Offbeat");
         noteInfoText.setVisible(true);
         
-        Timer timer = new Timer(250, e -> {
+        var bungkusVariabel = new Object(){ int jogetKeBerapa = 1; };
+        Timer timerWindowJoget = new Timer(25, e -> {
+            Point posisiWindow = this.getLocation();
+            
+            int kePosisiX = posisiWindow.x;
+            if (bungkusVariabel.jogetKeBerapa % 2 == 0) {
+                kePosisiX += 10;
+            } else {
+                kePosisiX -= 10;
+            }
+                    
+            this.setLocation(kePosisiX, posisiWindow.y);
+            
+            if (bungkusVariabel.jogetKeBerapa == 15) {
+                ((Timer)e.getSource()).stop();
+            }
+            bungkusVariabel.jogetKeBerapa++;
+        });
+        Timer timerTextDanSenar = new Timer(250, e -> {
            senar.setBackground(Color.black);
            noteInfoText.setVisible(false);
            ((Timer)e.getSource()).stop();
         });
-        timer.start();
+        
+        timerWindowJoget.start();
+        timerTextDanSenar.start();
+        
+        AudioPlayer soundEffect = new AudioPlayer();
+        soundEffect.loadAudio("assets/songs/a/LS-HKI Big Kick 09 (fixed).wav");
+        soundEffect.play();
         
         ubahSkor(-5);
     }
@@ -265,23 +342,23 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(383, 383, 383)
-                .addComponent(noteInfoText)
-                .addContainerGap(384, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(768, Short.MAX_VALUE)
                 .addComponent(skorText)
                 .addContainerGap())
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addComponent(noteInfoText)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(skorText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 434, Short.MAX_VALUE)
                 .addComponent(noteInfoText)
-                .addGap(56, 56, 56))
+                .addGap(59, 59, 59))
         );
 
         jPanel6.add(jPanel10);

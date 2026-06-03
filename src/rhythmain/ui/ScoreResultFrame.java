@@ -309,7 +309,7 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         jPanel_Grades.setBackground(new java.awt.Color(0, 153, 255));
 
         jLabel_grade.setFont(new java.awt.Font("Engravers MT", 3, 175)); // NOI18N
-        jLabel_grade.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_grade.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel_grade.setText("S");
 
         jLabel1.setText("GRADE:");

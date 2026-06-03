@@ -171,7 +171,6 @@
                       <Component id="jLabel_comboCount" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel_accuracy" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-<<<<<<< HEAD
                   <EmptySpace pref="46" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jAccuracy" pref="100" max="32767" attributes="0"/>
@@ -182,9 +181,6 @@
                       <Component id="jPerfectCounter" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-=======
-                  <EmptySpace pref="219" max="32767" attributes="0"/>
->>>>>>> origin/master
               </Group>
           </Group>
         </DimensionLayout>
@@ -479,7 +475,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Engravers MT" size="175" style="3"/>
             </Property>
-            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="text" type="java.lang.String" value="S"/>
           </Properties>
         </Component>
