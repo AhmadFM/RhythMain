@@ -10,9 +10,9 @@ package rhythmain.utils;
  */
 public class ScoreManager {
     // Konstanta Jendela Waktu (Milidetik)
-    private static final int PERFECT_WINDOW = 50;
-    private static final int GOOD_WINDOW = 100;
-    private static final int BAD_WINDOW = 150;
+    private static final int PERFECT_WINDOW = 20;
+    private static final int GOOD_WINDOW = 30;
+    private static final int BAD_WINDOW = 50;
 
     // Konstanta Bobot Nilai
     private static final int PERFECT_WEIGHT = 300;
@@ -35,7 +35,6 @@ public class ScoreManager {
     
     // Constructor: Inisialisasi/Reset data saat lagu baru dimulai
     public ScoreManager() {
-        resetScore();
     }
 
     public void resetScore() {
@@ -50,23 +49,28 @@ public class ScoreManager {
         missHits = 0;
     }
     
-    // timeDifference, Selisih waktu antara input dan target not
-    public void registerHit(int timeDifference) {
-        int diff = Math.abs(timeDifference);
+    // timeDifference, Selisih antara input dan target not
+    public String registerHit(int noteDiff) {
+        // int diff = Math.abs(timeDifference);
+        int diff = Math.abs(noteDiff);
         totalNotesPassed++;
-
+        
         if (diff <= PERFECT_WINDOW) {
             processScore(PERFECT_WEIGHT);
             perfectHits++;
+            return "perfect";
         } else if (diff <= GOOD_WINDOW) {
             processScore(GOOD_WEIGHT);
             goodHits++;
+            return "good";
         } else if (diff <= BAD_WINDOW) {
             processScore(BAD_WEIGHT);
             badHits++;
+            return "bad";
         } else {
             // Jika ditekan tapi terlalu jauh dari window, dihitung Miss
             processMiss(false);
+            return "miss";
         }
     }
 
@@ -81,7 +85,7 @@ public class ScoreManager {
     }
 
     // Penambahan skor dan combo.
-    private void processScore(int baseWeight) {
+    private int processScore(int baseWeight) {
         currentCombo++;
         if (currentCombo > maxCombo) {
             maxCombo = currentCombo;
@@ -92,6 +96,7 @@ public class ScoreManager {
         // Kalkulasi skor dengan multiplier combo
         int scoreToAdd = baseWeight + (baseWeight * currentCombo / 25);
         totalScore += scoreToAdd;
+        return totalScore;
     }
 
     // Mengkalkulasi akurasi saat ini.

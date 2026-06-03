@@ -29,7 +29,7 @@ public class DBConnect {
         id = "root";
         pass = ""; // edit kalau berbeda
         driver = "com.mysql.cj.jdbc.Driver";
-        url = "jdbc:mysql://localhost:3306/db_pbo_rythm?userTimezone=true&server=UTC";
+        url = "jdbc:mysql://localhost:3306/db_pbo_rythm?useTimezone=true&serverTimezone=UTC";
         
         try {
             Class.forName(driver).newInstance();
@@ -41,6 +41,7 @@ public class DBConnect {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
     
