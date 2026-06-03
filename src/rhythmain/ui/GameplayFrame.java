@@ -20,10 +20,13 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import rhythmain.audio.AudioPlayer;
 import rhythmain.dao.BeatmapDAO;
+import rhythmain.dao.GameplaySettingDAO;
+import rhythmain.model.GameplaySetting;
 import rhythmain.model.Song;
 import rhythmain.utils.BeatmapReader;
 import rhythmain.utils.Note;
 import rhythmain.utils.ScoreManager;
+import rhythmain.utils.UserSession;
 
 
 class NoteSenar {
@@ -46,11 +49,14 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     // Informasi penting.
     Song song;
     String difficulty;
+    GameplaySetting gameplaySetting;
     
+    // Apakah game sedang berjalan.
+    boolean gameBerjalan = true;
     // Skor game.
     int skor = 0;
     // Kecepatan note.
-    int kecepatanNote = 4;
+    double kecepatanNote = 4.0;
     // Waktu kapan game pertama kali dimulai.
     long startTime;
     
@@ -76,16 +82,31 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         
         this.song = song;
         this.difficulty = difficulty;
+        this.scoreManager.resetScore();
         
         // Ambil posisi button tiap senar (tapi ambil dari senar D aja).
         senarButtonY = senarD.getSize().height;
         // Sembunyikan noteInfoText (Teks informasi buat Perfect, Miss, Offbeat)
         noteInfoText.setVisible(false);
 
+        // Baca setting.
+        bacaSetting();
         // Baca beatmap.
         bacaBeatmap();
         // Mulai game.
         mulaiGame();
+    }
+    
+    private void bacaSetting() {
+        GameplaySettingDAO koneksiDatabase = new GameplaySettingDAO();
+        gameplaySetting = koneksiDatabase.getSetting(UserSession.userId);
+        
+        senarDButtonLabel.setText(String.valueOf(gameplaySetting.getSenar1()).toUpperCase());
+        senarFButtonLabel.setText(String.valueOf(gameplaySetting.getSenar2()).toUpperCase());
+        senarJButtonLabel.setText(String.valueOf(gameplaySetting.getSenar3()).toUpperCase());
+        senarKButtonLabel.setText(String.valueOf(gameplaySetting.getSenar4()).toUpperCase());
+        
+        kecepatanNote = gameplaySetting.getScrollSpeed();
     }
     
     private void bacaBeatmap() {
@@ -107,7 +128,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     
     private void mulaiGame() {
         // Mainkan lagu.
-        audioPlayer.loadAudio("assets/songs/a/audio.wav");
+        audioPlayer.loadAudio(song.getAudioPath());
         audioPlayer.play();
         
         // Simpan waktu pertama kali game dimulai.
@@ -115,6 +136,11 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         
         // Jalankan looping.
         Timer mainLoop = new Timer(16, e -> {
+            // Stop loop apabila game sudah dihentikan.
+            if (!gameBerjalan) {
+                ((Timer)e.getSource()).stop();
+                return;
+            }
             cekQueueNote();
             prosesNotePadaSenar(senarD, daftarNoteSenarD);
             prosesNotePadaSenar(senarF, daftarNoteSenarF);
@@ -122,6 +148,13 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
             prosesNotePadaSenar(senarK, daftarNoteSenarK);
         });
         mainLoop.start(); 
+        
+        System.out.println("durasi " + audioPlayer.getDuration());
+        Timer timerDurasiLagu = new Timer(audioPlayer.getDuration(), e -> {
+            apabilaLaguSelesai();
+            ((Timer)e.getSource()).stop();
+        });
+        timerDurasiLagu.start();
     }
     
     private void cekQueueNote() {
@@ -150,11 +183,13 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
             NoteSenar noteSenar = iterator.next();
             noteSenar.y += kecepatanNote;
             
-            if (noteSenar.y >= senarButtonY + 15) {
+            if (noteSenar.y - senarButtonY > ScoreManager.BAD_WINDOW) {
                 senar.remove(noteSenar.component);
                 senar.revalidate();
                 senar.repaint();
                 iterator.remove();
+                
+                scoreManager.processMiss(false);
                 noteApabilaMiss(senar);
             } else {
                 noteSenar.component.setLocation(0, noteSenar.y);
@@ -205,10 +240,11 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         }
        
         // Cek apakah note kena tombol senar.
-        if (notePertama.y + 20 >= senarButtonY) {
-            noteApabilaKena(senar);
+        String accuracy = scoreManager.registerHit(notePertama.y - senarButtonY);
+        if (accuracy == "miss") {
+            noteApabilaMiss(senar);
         } else {
-            noteApabilaOffbeat(senar);
+            noteApabilaKena(senar, accuracy, notePertama.note.hitsound);
         }
         
         senar.remove(notePertama.component);
@@ -216,9 +252,22 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         senar.repaint();
     }
     
-    private void noteApabilaKena(JPanel senar) {
-        senar.setBackground(Color.green);
-        noteInfoText.setText("Perfect");
+    private void noteApabilaKena(JPanel senar, String accuracy, String soundEffectName) {
+        switch (accuracy) {
+            case "perfect" -> {
+                senar.setBackground(Color.green);
+                noteInfoText.setText("Perfect!");
+            }
+            case "good" -> {
+                senar.setBackground(Color.yellow);
+                noteInfoText.setText("Good");
+            }
+            case "bad" -> {
+                senar.setBackground(Color.orange);
+                noteInfoText.setText("Bad");
+            }
+        }
+       
         noteInfoText.setVisible(true);
         
         Timer timer = new Timer(250, e -> {
@@ -229,50 +278,52 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         timer.start();
         
         AudioPlayer soundEffect = new AudioPlayer();
-        soundEffect.loadAudio("assets/songs/a/clap (fixed).wav");
+        Path soundFolder = Path.of(song.getAudioPath()).getParent();
+        soundEffect.loadAudio(soundFolder + "\\" + soundEffectName);
         soundEffect.play();
         
-        ubahSkor(10);
+        int totalSkor = scoreManager.getTotalScore();
+        ubahSkor(totalSkor);
     }
     
-    private void noteApabilaOffbeat(JPanel senar) {
-        senar.setBackground(Color.magenta);
-        noteInfoText.setText("Offbeat");
-        noteInfoText.setVisible(true);
-        
-        var bungkusVariabel = new Object(){ int jogetKeBerapa = 1; };
-        Timer timerWindowJoget = new Timer(25, e -> {
-            Point posisiWindow = this.getLocation();
-            
-            int kePosisiX = posisiWindow.x;
-            if (bungkusVariabel.jogetKeBerapa % 2 == 0) {
-                kePosisiX += 10;
-            } else {
-                kePosisiX -= 10;
-            }
-                    
-            this.setLocation(kePosisiX, posisiWindow.y);
-            
-            if (bungkusVariabel.jogetKeBerapa == 15) {
-                ((Timer)e.getSource()).stop();
-            }
-            bungkusVariabel.jogetKeBerapa++;
-        });
-        Timer timerTextDanSenar = new Timer(250, e -> {
-           senar.setBackground(Color.black);
-           noteInfoText.setVisible(false);
-           ((Timer)e.getSource()).stop();
-        });
-        
-        timerWindowJoget.start();
-        timerTextDanSenar.start();
-        
-        AudioPlayer soundEffect = new AudioPlayer();
-        soundEffect.loadAudio("assets/songs/a/LS-HKI Big Kick 09 (fixed).wav");
-        soundEffect.play();
-        
-        ubahSkor(-5);
-    }
+//    private void noteApabilaOffbeat(JPanel senar) {
+//        senar.setBackground(Color.magenta);
+//        noteInfoText.setText("Offbeat");
+//        noteInfoText.setVisible(true);
+//        
+////        var bungkusVariabel = new Object(){ int jogetKeBerapa = 1; };
+////        Timer timerWindowJoget = new Timer(25, e -> {
+////            Point posisiWindow = this.getLocation();
+////            
+////            int kePosisiX = posisiWindow.x;
+////            if (bungkusVariabel.jogetKeBerapa % 2 == 0) {
+////                kePosisiX += 10;
+////            } else {
+////                kePosisiX -= 10;
+////            }
+////                    
+////            this.setLocation(kePosisiX, posisiWindow.y);
+////            
+////            if (bungkusVariabel.jogetKeBerapa == 15) {
+////                ((Timer)e.getSource()).stop();
+////            }
+////            bungkusVariabel.jogetKeBerapa++;
+////        });
+//        Timer timerTextDanSenar = new Timer(250, e -> {
+//           senar.setBackground(Color.black);
+//           noteInfoText.setVisible(false);
+//           ((Timer)e.getSource()).stop();
+//        });
+//        
+//        timerWindowJoget.start();
+//        timerTextDanSenar.start();
+//        
+//        AudioPlayer soundEffect = new AudioPlayer();
+//        soundEffect.loadAudio("assets/songs/a/LS-HKI Big Kick 09 (fixed).wav");
+//        soundEffect.play();
+//        
+//        ubahSkor(-5);
+//    }
     
     private void noteApabilaMiss(JPanel senar) {
         senar.setBackground(Color.red);
@@ -286,12 +337,22 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         });
         timer.start();
         
-        ubahSkor(-10);
+        int totalSkor = scoreManager.getTotalScore();
+        ubahSkor(totalSkor);
     }
     
     private void ubahSkor(int berapa) {
-        skor += berapa;
+        skor = berapa;
         skorText.setText("Skor: " + skor);
+    }
+    
+    private void apabilaLaguSelesai() {
+        ScoreResultFrame frame = new ScoreResultFrame(song.getSongId());
+        frame.setVisible(true);
+        
+        audioPlayer.stop();
+        gameBerjalan = false;
+        this.dispose();
     }
 
     /**
@@ -313,19 +374,19 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         jPanel4 = new javax.swing.JPanel();
         senarD = new javax.swing.JPanel();
         senarDButton = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        senarDButtonLabel = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         senarF = new javax.swing.JPanel();
         senarFButton = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        senarFButtonLabel = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         senarJ = new javax.swing.JPanel();
         senarJButton = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        senarJButtonLabel = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         senarK = new javax.swing.JPanel();
         senarKButton = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        senarKButtonLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -405,14 +466,14 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         senarDButton.setBackground(new java.awt.Color(255, 51, 51));
         senarDButton.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("D");
+        senarDButtonLabel.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        senarDButtonLabel.setForeground(new java.awt.Color(255, 255, 255));
+        senarDButtonLabel.setText("D");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        senarDButton.add(jLabel1, gridBagConstraints);
+        senarDButton.add(senarDButtonLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -457,14 +518,14 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         senarFButton.setBackground(new java.awt.Color(255, 51, 51));
         senarFButton.setLayout(new java.awt.GridBagLayout());
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("F");
+        senarFButtonLabel.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        senarFButtonLabel.setForeground(new java.awt.Color(255, 255, 255));
+        senarFButtonLabel.setText("F");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        senarFButton.add(jLabel2, gridBagConstraints);
+        senarFButton.add(senarFButtonLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -509,14 +570,14 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         senarJButton.setBackground(new java.awt.Color(255, 51, 51));
         senarJButton.setLayout(new java.awt.GridBagLayout());
 
-        jLabel4.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("J");
+        senarJButtonLabel.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        senarJButtonLabel.setForeground(new java.awt.Color(255, 255, 255));
+        senarJButtonLabel.setText("J");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        senarJButton.add(jLabel4, gridBagConstraints);
+        senarJButton.add(senarJButtonLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -561,14 +622,14 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         senarKButton.setBackground(new java.awt.Color(255, 51, 51));
         senarKButton.setLayout(new java.awt.GridBagLayout());
 
-        jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("K");
+        senarKButtonLabel.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        senarKButtonLabel.setForeground(new java.awt.Color(255, 255, 255));
+        senarKButtonLabel.setText("K");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        senarKButton.add(jLabel5, gridBagConstraints);
+        senarKButton.add(senarKButtonLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -613,10 +674,6 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel14;
@@ -628,12 +685,16 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     private javax.swing.JLabel noteInfoText;
     private javax.swing.JPanel senarD;
     private javax.swing.JPanel senarDButton;
+    private javax.swing.JLabel senarDButtonLabel;
     private javax.swing.JPanel senarF;
     private javax.swing.JPanel senarFButton;
+    private javax.swing.JLabel senarFButtonLabel;
     private javax.swing.JPanel senarJ;
     private javax.swing.JPanel senarJButton;
+    private javax.swing.JLabel senarJButtonLabel;
     private javax.swing.JPanel senarK;
     private javax.swing.JPanel senarKButton;
+    private javax.swing.JLabel senarKButtonLabel;
     private javax.swing.JLabel skorText;
     // End of variables declaration//GEN-END:variables
 
@@ -649,21 +710,22 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         System.out.println("Key pressed");
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_D -> {
-                cekNoteApakahKena(senarD, daftarNoteSenarD);
-            }
-            case KeyEvent.VK_F -> {
-                cekNoteApakahKena(senarF, daftarNoteSenarF);
-            }
-            case KeyEvent.VK_J -> {
-                cekNoteApakahKena(senarJ, daftarNoteSenarJ);
-            }
-            case KeyEvent.VK_K -> {
-                cekNoteApakahKena(senarK, daftarNoteSenarK);
-            }
+        
+        char senar1 = gameplaySetting.getSenar1();
+        char senar2 = gameplaySetting.getSenar2();
+        char senar3 = gameplaySetting.getSenar3();
+        char senar4 = gameplaySetting.getSenar4();
+        char keyChar = Character.toLowerCase(e.getKeyChar());
+        
+        if (keyChar == senar1) {
+             cekNoteApakahKena(senarD, daftarNoteSenarD);
+        } else if (keyChar == senar2) {
+             cekNoteApakahKena(senarF, daftarNoteSenarF);
+        } else if (keyChar == senar3) {
+             cekNoteApakahKena(senarJ, daftarNoteSenarJ);
+        } else if (keyChar == senar4) {
+             cekNoteApakahKena(senarK, daftarNoteSenarK);
         }
-
     }
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ScoreResultFrame.class.getName());

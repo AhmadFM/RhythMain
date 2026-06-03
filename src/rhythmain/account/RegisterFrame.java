@@ -152,13 +152,8 @@ public class RegisterFrame extends javax.swing.JFrame {
                     "Register Success!"
             );
 
-            UserSession.username
-                    = txtUsername.getText();
-
-            MainMenuFrame menu
-                    = new MainMenuFrame();
-
-            menu.setVisible(true);
+            LoginFrame frame = new LoginFrame();
+            frame.setVisible(true);
 
             this.dispose();
 

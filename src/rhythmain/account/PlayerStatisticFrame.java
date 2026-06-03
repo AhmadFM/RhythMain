@@ -7,6 +7,9 @@ package rhythmain.account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import rhythmain.dao.UserStatDAO;
+import rhythmain.model.UserStat;
 
 import rhythmain.utils.DBConnect;
 import rhythmain.utils.UserSession;
@@ -30,36 +33,27 @@ public class PlayerStatisticFrame extends javax.swing.JFrame {
     private void loadStatistic() {
 
         try {
-
-            DBConnect db = new DBConnect();
-            Connection conn = db.con;
-            String sql
-                    = "SELECT * FROM users WHERE user_id=?";
-            PreparedStatement pst
-                    = conn.prepareStatement(sql);
-            pst.setInt(
-                    1,
-                    UserSession.userId
+           UserStatDAO koneksiDatabase = new UserStatDAO();
+           UserStat userStat = koneksiDatabase.getUserStat(UserSession.userId);
+           
+           if (userStat == null) {
+               JOptionPane.showMessageDialog(this, "Kamu belum pernah bermain sama sekali");
+               return;
+           }
+           
+            lblUsername1.setText(
+                    userStat.getTotalXP()
+                    + " XP"
+            );
+            lblXP1.setText(
+                    userStat.getLevel()
+                    + ""
             );
 
-            ResultSet rs
-                    = pst.executeQuery();
-            if (rs.next()) {
-                lblUsername1.setText(
-                        rs.getInt("total_xp")
-                        + " XP"
-                );
-                lblXP1.setText(
-                        rs.getInt("level_user")
-                        + ""
-                );
-
-                lblXP.setText(
-                        rs.getInt("accuracy")
-                        + "%"
-                );
-            }
-
+            lblXP.setText(
+                    userStat.getAccuracy()
+                    + "%"
+            );
         } catch (Exception e) {
 
             System.out.println(e);

@@ -12,7 +12,7 @@ public class Note {
     public float timing;
     public int posisi;
     
-    public String hitSound;
+    public String hitsound;
 }
 
 

@@ -68,7 +68,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                             java.awt.event.MouseEvent evt) {
 
                         showSongInfo(song);
-
+                        selectedSong = song;
                     }
 
                 }
@@ -563,9 +563,6 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
         // TODO add your handling code here:
-        GameplayFrame frame = new GameplayFrame(selectedSong, selectedDifficulty);
-        frame.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_btnPlayActionPerformed
 
     private void btnEasyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEasyMouseClicked
@@ -632,6 +629,10 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
                     + selectedDifficulty
             );
+            
+            GameplayFrame frame = new GameplayFrame(selectedSong, selectedDifficulty);
+            frame.setVisible(true);
+            this.setVisible(false);
     }//GEN-LAST:event_btnPlayMouseClicked
 
     /**
