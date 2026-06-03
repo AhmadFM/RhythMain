@@ -155,4 +155,12 @@ public class ScoreManager {
     public int getMissHits() {
         return missHits;
     }
+    
+    public int getAllHits(){
+        return perfectHits+goodHits+badHits;
+    }
+    
+    public boolean isItFullCombo(){
+        return maxCombo == totalNotesPassed;
+    }
 }
