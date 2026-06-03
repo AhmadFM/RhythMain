@@ -57,12 +57,6 @@ public class AccountManagerFrame extends javax.swing.JFrame {
                 lblUsername1.setText(
                         rs.getString("username")
                 );
-
-                lblXP.setText(
-                        rs.getInt("total_xp")
-                        + " XP"
-                );
-
             }
 
         } catch (Exception e) {
@@ -86,9 +80,6 @@ public class AccountManagerFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
-        lblXP = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         lblUsername1 = new javax.swing.JLabel();
         btnPlayer = new javax.swing.JButton();
@@ -116,20 +107,6 @@ public class AccountManagerFrame extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(233, 235, 248)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblXP.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblXP.setForeground(new java.awt.Color(54, 247, 250));
-        lblXP.setText("20");
-        jPanel1.add(lblXP, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, -1, -1));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("XP");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
-
-        jSeparator2.setForeground(new java.awt.Color(233, 235, 248));
-        jSeparator2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 530, 10));
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Username");
@@ -140,7 +117,7 @@ public class AccountManagerFrame extends javax.swing.JFrame {
         lblUsername1.setText("Masda");
         jPanel1.add(lblUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
 
-        mainPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 650, 120));
+        mainPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 650, 70));
 
         btnPlayer.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnPlayer.setText("PLAYER STATISTICS");
@@ -149,7 +126,7 @@ public class AccountManagerFrame extends javax.swing.JFrame {
                 btnPlayerActionPerformed(evt);
             }
         });
-        mainPanel.add(btnPlayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 400, 50));
+        mainPanel.add(btnPlayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 400, 50));
 
         btnControl.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnControl.setText("CONTROL SETTING");
@@ -158,7 +135,7 @@ public class AccountManagerFrame extends javax.swing.JFrame {
                 btnControlActionPerformed(evt);
             }
         });
-        mainPanel.add(btnControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 410, 400, 50));
+        mainPanel.add(btnControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, 400, 50));
 
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(255, 102, 102));
@@ -168,7 +145,7 @@ public class AccountManagerFrame extends javax.swing.JFrame {
                 btnDeleteActionPerformed(evt);
             }
         });
-        mainPanel.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 480, 400, 50));
+        mainPanel.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 400, 50));
 
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnBack.setText("BACK TO MENU");
@@ -177,7 +154,7 @@ public class AccountManagerFrame extends javax.swing.JFrame {
                 btnBackActionPerformed(evt);
             }
         });
-        mainPanel.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 550, 400, 50));
+        mainPanel.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, 400, 50));
 
         btnProfile.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnProfile.setText("PROFILE SETTING");
@@ -186,7 +163,7 @@ public class AccountManagerFrame extends javax.swing.JFrame {
                 btnProfileActionPerformed(evt);
             }
         });
-        mainPanel.add(btnProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 400, 50));
+        mainPanel.add(btnProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 400, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -316,13 +293,10 @@ public class AccountManagerFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnPlayer;
     private javax.swing.JButton btnProfile;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblUsername1;
-    private javax.swing.JLabel lblXP;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }

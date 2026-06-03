@@ -75,6 +75,10 @@ public class AudioPlayer {
     public boolean isPlaying() {
         return audioClip != null && audioClip.isRunning();
     }
+    
+    public int getDuration() {
+        return (int) (audioClip.getMicrosecondLength() / 1_000);
+    }
 }
 
 /**

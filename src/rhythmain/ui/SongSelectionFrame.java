@@ -81,7 +81,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                             java.awt.event.MouseEvent evt) {
 
                         showSongInfo(song);
-
+                        selectedSong = song;
                     }
 
                 }
@@ -308,10 +308,13 @@ public class SongSelectionFrame extends javax.swing.JFrame {
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlHeaderLayout.createSequentialGroup()
-                        .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtSearchSong, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblLevel)
                         .addContainerGap())
@@ -384,11 +387,8 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                     .addGroup(pnlSongInfoLayout.createSequentialGroup()
                         .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSongDuration)
-                            .addGroup(pnlSongInfoLayout.createSequentialGroup()
-                                .addComponent(songDuration)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                                .addComponent(SongDifficulty1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(songDuration))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                         .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSongDifficulty)
                             .addComponent(SongDifficulty))
@@ -667,6 +667,10 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
                     + selectedDifficulty
             );
+            
+            GameplayFrame frame = new GameplayFrame(selectedSong, selectedDifficulty);
+            frame.setVisible(true);
+            this.setVisible(false);
     }//GEN-LAST:event_btnPlayMouseClicked
 
     /**

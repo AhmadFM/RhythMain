@@ -10,9 +10,9 @@ package rhythmain.utils;
  */
 public class ScoreManager {
     // Konstanta Jendela Waktu (Milidetik)
-    private static final int PERFECT_WINDOW = 20;
-    private static final int GOOD_WINDOW = 30;
-    private static final int BAD_WINDOW = 50;
+    public static final int PERFECT_WINDOW = 20;
+    public static final int GOOD_WINDOW = 30;
+    public static final int BAD_WINDOW = 50;
 
     // Konstanta Bobot Nilai
     private static final int PERFECT_WEIGHT = 300;
@@ -21,17 +21,17 @@ public class ScoreManager {
     private static final int MISS_WEIGHT = 0;
 
     // Variabel Sesi Permainan
-    private int totalScore;
-    private int currentCombo;
-    private int maxCombo;
+    private static int totalScore;
+    private static int currentCombo;
+    private static int maxCombo;
 
     // Variabel untuk Akurasi dan Result Screen
-    private int totalNotesPassed;
-    private int totalWeightAchieved;
-    private int perfectHits;
-    private int goodHits;
-    private int badHits;
-    private int missHits;
+    private static int totalNotesPassed;
+    private static int totalWeightAchieved;
+    private static int perfectHits;
+    private static int goodHits;
+    private static int badHits;
+    private static int missHits;
     
     // Constructor: Inisialisasi/Reset data saat lagu baru dimulai
     public ScoreManager() {
