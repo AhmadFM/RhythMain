@@ -7,6 +7,8 @@ package rhythmain.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -25,36 +27,100 @@ public class SongCardPanel extends JPanel {
 
     public SongCardPanel(Song song) {
 
-        this.song = song;
+    this.song = song;
 
-        setLayout(new GridLayout(2, 1));
+    setLayout(null);
 
-        setBackground(
-                new Color(30, 40, 60));
+    setPreferredSize(
+            new Dimension(
+                    300,
+                    70
+            )
+    );
 
-        setBorder(
-                BorderFactory.createLineBorder(
-                        Color.CYAN,
-                        1
-                )
-        );
+    setBackground(
+            new Color(
+                    30,
+                    40,
+                    60
+            )
+    );
 
-        JLabel lblTitle =
-                new JLabel(song.getTitle());
+    setBorder(
+            BorderFactory.createLineBorder(
+                    Color.CYAN,
+                    1
+            )
+    );
 
-        JLabel lblArtist =
-                new JLabel(song.getArtist());
+    JLabel lblTitle =
+            new JLabel(
+                    song.getTitle()
+            );
 
-        lblTitle.setForeground(Color.WHITE);
+    lblTitle.setBounds(
+            15,
+            10,
+            300,
+            25
+    );
 
-        lblArtist.setForeground(
-                Color.LIGHT_GRAY);
+    lblTitle.setForeground(
+            Color.WHITE
+    );
 
-        add(lblTitle);
-        add(lblArtist);
-    }
+    lblTitle.setFont(
+            new Font(
+                    "Arial",
+                    Font.BOLD,
+                    20
+            )
+    );
 
-    public Song getSong() {
-        return song;
-    }
+    add(lblTitle);
+
+    JLabel lblArtist =
+            new JLabel(
+                    song.getArtist()
+            );
+
+    lblArtist.setBounds(
+            15,
+            38,
+            100,
+            20
+    );
+
+    lblArtist.setForeground(
+            Color.LIGHT_GRAY
+    );
+
+    add(lblArtist);
+
+    JLabel lblDuration =
+            new JLabel(
+                    "03:00"
+            );
+
+    lblDuration.setBounds(
+            450,
+            20,
+            50,
+            25
+    );
+
+    lblDuration.setForeground(
+            Color.WHITE
+    );
+
+    lblDuration.setFont(
+            new Font(
+                    "Arial",
+                    Font.BOLD,
+                    18
+            )
+    );
+
+    add(lblDuration);
+}    
 }

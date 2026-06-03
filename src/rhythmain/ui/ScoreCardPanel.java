@@ -6,6 +6,7 @@ package rhythmain.ui;
 
 import java.awt.Color;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,18 +27,31 @@ public class ScoreCardPanel extends JPanel {
     }
 
     private void initComponents(
-            int rank,
-            String username,
-            int score) {
+        int rank,
+        String username,
+        int score) {
 
-        setLayout(null);
+        setLayout(new BorderLayout());
 
-        setSize(450, 65);
         setPreferredSize(
-                new java.awt.Dimension(
-                        450,
-                        65
-                )
+            new Dimension(
+                450,
+                70
+            )
+        );
+
+        setMaximumSize(
+            new Dimension(
+                Integer.MAX_VALUE,
+                70
+            )
+        );
+
+        setMinimumSize(
+            new Dimension(
+                250,
+                70
+            )
         );
 
         Color bg;
@@ -57,7 +71,7 @@ public class ScoreCardPanel extends JPanel {
                 break;
 
             default:
-                bg = new Color(10,20,60);
+                bg = new Color(8,18,60);
         }
 
         setBackground(bg);
@@ -69,16 +83,16 @@ public class ScoreCardPanel extends JPanel {
 
         lblRank.setBounds(
                 20,
-                10,
+                15,
                 40,
-                40
+                35
         );
 
         lblRank.setFont(
                 new Font(
                         "Arial",
                         Font.BOLD,
-                        26
+                        20
                 )
         );
 
@@ -89,20 +103,22 @@ public class ScoreCardPanel extends JPanel {
         add(lblRank);
 
         JLabel lblUser =
-                new JLabel(username);
+                new JLabel(
+                        username
+                );
 
         lblUser.setBounds(
                 70,
-                10,
-                220,
-                40
+                15,
+                200,
+                35
         );
 
         lblUser.setFont(
                 new Font(
                         "Arial",
                         Font.BOLD,
-                        22
+                        18
                 )
         );
 
@@ -118,17 +134,21 @@ public class ScoreCardPanel extends JPanel {
                 );
 
         lblScore.setBounds(
-                320,
-                10,
-                120,
-                40
+            250,
+            15,
+            150,
+            35
+        );
+
+        lblScore.setHorizontalAlignment(
+            JLabel.RIGHT
         );
 
         lblScore.setFont(
                 new Font(
                         "Arial",
                         Font.BOLD,
-                        22
+                        18
                 )
         );
 
