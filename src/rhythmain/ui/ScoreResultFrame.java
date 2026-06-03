@@ -439,7 +439,6 @@ public class ScoreResultFrame extends javax.swing.JFrame {
                 jButton_ReturnMouseClicked(evt);
             }
         });
-        jButton_Return.addActionListener(this::jButton_ReturnActionPerformed);
 
         jPanel_Performances.setBackground(new java.awt.Color(0, 153, 255));
 
@@ -552,35 +551,31 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton_ReturnMouseClicked
 
-    private void jButton_ReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ReturnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_ReturnActionPerformed
-
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getGlobal().log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-    
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ScoreResultFrame(1).setVisible(true));
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getGlobal().log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//    
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(() -> new ScoreResultFrame(1).setVisible(true));
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jAccuracy;
