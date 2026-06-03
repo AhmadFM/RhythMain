@@ -12,6 +12,7 @@ import rhythmain.model.Song;
 import rhythmain.ui.SongCardPanel;
 import java.sql.ResultSet;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.border.CompoundBorder;
 import rhythmain.dao.ScoreDAO;
 import rhythmain.ui.ScoreCardPanel;
@@ -33,9 +34,21 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         loadSongs();
         loadLeaderboard();
         
+        lblSongTitle.setText("Pilih lagu terlebih dahulu...");
+        lblSongArtist.setText("");
+        lblSongCreator.setText("");
+        songDuration.setText( "00:00");
+        SongDifficulty.setText("");
+         pnlLeaderboardContainer.setLayout(
+                        new BoxLayout(
+                                pnlLeaderboardContainer,
+                                BoxLayout.Y_AXIS
+                        )
+                );
+        
     }
     private Song selectedSong = null;
-    private String selectedDifficulty = "Easy";
+    private String selectedDifficulty = "-";
     
     private void loadSongs() {
 
@@ -45,13 +58,13 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         List<Song> songs =
                 dao.getAllSongs();
         
-        if(!songs.isEmpty()) {
-
-            showSongInfo(
-                    songs.get(0)
-            );
-
-        }
+//        if(!songs.isEmpty()) {
+//
+//            showSongInfo(
+//                    songs.get(0)
+//            );
+//
+//        }
 
         pnlSongContainer.removeAll();
 
@@ -81,9 +94,10 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
         pnlSongContainer.repaint();
     }
-    private void showSongInfo(
-        Song song) {
+    private void showSongInfo(Song song) {
 
+         selectedSong = song;
+        
         lblSongTitle.setText(
                 song.getTitle()
         );
@@ -95,29 +109,22 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         lblSongCreator.setText(
                 song.getCreator()
         );
-
-        SongDifficulty.setText(
-                getDifficulty(
-                        song.getBpm()
-                )
+        songDuration.setText(
+            "03:00"
         );
-
+        
+//        SongDifficulty.setText("");
     }
     
-    private String getDifficulty(
-        double bpm) {
-
-        if(bpm <= 130) {
-            return "Easy";
-        }
-
-        if(bpm <= 140) {
-            return "Normal";
-        }
-
-        return "Hard";
-    }
     private void loadLeaderboard() {
+        
+        if(selectedSong == null) {
+            return;
+        }
+        
+        if(selectedDifficulty.isEmpty() || selectedDifficulty.equals("-")) {
+            return;
+        }
         
         
 
@@ -127,21 +134,32 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
             ScoreDAO dao =
                 new ScoreDAO();
-
+          
             ResultSet rs =
-                dao.getTop10Scores();
+              dao.getTop10Scores(
+                  selectedSong.getSongId(),
+                  selectedDifficulty
+              );
 
-            int rank = 1;
+//        System.out.println(
+//            "Song ID = " +
+//            selectedSong.getSongId()
+//        );
+//
+//        System.out.println(
+//            "Difficulty = " +
+//            selectedDifficulty
+//        );
 
-            while(rs.next()) {
+    int rank = 1;
+    
+    while(rs.next()) {
+        String username =
+        rs.getString("username");
 
-                String username =
-                    rs.getString("username");
-
-                int score =
-                    rs.getInt("best_score");
+    int score = rs.getInt("score");
                 
-//                System.out.println( username + " " + score);
+//      System.out.println( username + " " + score);
 
                 ScoreCardPanel card =
                     new ScoreCardPanel(
@@ -179,6 +197,8 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                 );
 
                 pnlLeaderboardContainer.add(card);
+                pnlLeaderboardContainer.add(javax.swing.Box.createVerticalStrut(8));
+               
 
                 rank++;
             }
@@ -206,14 +226,13 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         pnlHeader = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
-        txtSearchSong = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
         lblLevel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         scrLeaderboard = new javax.swing.JScrollPane();
         pnlLeaderboardContainer = new javax.swing.JPanel();
         pnlSongInfo = new javax.swing.JPanel();
-        lblSongCover = new javax.swing.JPanel();
         lblSongTitle = new javax.swing.JLabel();
         lblSongArtist = new javax.swing.JLabel();
         lblSongDuration = new javax.swing.JLabel();
@@ -222,6 +241,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         SongDifficulty = new javax.swing.JLabel();
         lblSongCreator = new javax.swing.JLabel();
         SongCreator = new javax.swing.JLabel();
+        SongDifficulty1 = new javax.swing.JLabel();
         scrSongList = new javax.swing.JScrollPane();
         pnlSongContainer = new javax.swing.JPanel();
         pnlDifficulty = new javax.swing.JPanel();
@@ -244,13 +264,11 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         pnlHeader.setBackground(new java.awt.Color(15, 23, 42));
         pnlHeader.setAlignmentX(0.0F);
         pnlHeader.setAlignmentY(0.0F);
+        pnlHeader.setPreferredSize(new java.awt.Dimension(800, 108));
 
-        lblLogo.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
+        lblLogo.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         lblLogo.setForeground(java.awt.Color.cyan);
         lblLogo.setText("RhythMain");
-
-        txtSearchSong.setText("Cari Lagu....");
-        txtSearchSong.setPreferredSize(new java.awt.Dimension(250, 20));
 
         btnBack.setText("<-");
         btnBack.addActionListener(this::btnBackActionPerformed);
@@ -262,16 +280,20 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         lblLevel.setForeground(java.awt.Color.cyan);
         lblLevel.setText("Lv. 100");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("SELECT A SONG");
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap(132, Short.MAX_VALUE)
                 .addComponent(lblLogo)
-                .addGap(68, 68, 68)
-                .addComponent(txtSearchSong, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(150, 150, 150)
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblUsername)
                     .addGroup(pnlHeaderLayout.createSequentialGroup()
@@ -279,62 +301,61 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                         .addComponent(lblLevel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addContainerGap())
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSearchSong, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 29, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblLevel))
                     .addGroup(pnlHeaderLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(lblLogo)))
-                .addGap(14, 14, 14))
+                        .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblLevel)
+                        .addContainerGap())
+                    .addGroup(pnlHeaderLayout.createSequentialGroup()
+                        .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(36, 36, 36))))
         );
 
         pnlLeaderboardContainer.setBackground(new java.awt.Color(15, 23, 42));
         pnlLeaderboardContainer.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.cyan, 2));
         pnlLeaderboardContainer.setPreferredSize(new java.awt.Dimension(275, 480));
-        pnlLeaderboardContainer.setLayout(new java.awt.GridLayout(0, 1, 0, 5));
+
+        javax.swing.GroupLayout pnlLeaderboardContainerLayout = new javax.swing.GroupLayout(pnlLeaderboardContainer);
+        pnlLeaderboardContainer.setLayout(pnlLeaderboardContainerLayout);
+        pnlLeaderboardContainerLayout.setHorizontalGroup(
+            pnlLeaderboardContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 271, Short.MAX_VALUE)
+        );
+        pnlLeaderboardContainerLayout.setVerticalGroup(
+            pnlLeaderboardContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 476, Short.MAX_VALUE)
+        );
+
         scrLeaderboard.setViewportView(pnlLeaderboardContainer);
 
         pnlSongInfo.setBackground(new java.awt.Color(15, 23, 47));
         pnlSongInfo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.cyan, java.awt.Color.cyan, null, null));
         pnlSongInfo.setPreferredSize(new java.awt.Dimension(130, 130));
 
-        lblSongCover.setBackground(new java.awt.Color(204, 0, 0));
-
-        javax.swing.GroupLayout lblSongCoverLayout = new javax.swing.GroupLayout(lblSongCover);
-        lblSongCover.setLayout(lblSongCoverLayout);
-        lblSongCoverLayout.setHorizontalGroup(
-            lblSongCoverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 138, Short.MAX_VALUE)
-        );
-        lblSongCoverLayout.setVerticalGroup(
-            lblSongCoverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         lblSongTitle.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         lblSongTitle.setForeground(new java.awt.Color(255, 255, 255));
-        lblSongTitle.setText("Twinkle Twinkle Little Star");
+        lblSongTitle.setText("Pilih lagu terlebih dahulu...");
 
         lblSongArtist.setForeground(new java.awt.Color(255, 255, 255));
-        lblSongArtist.setText("TwoTwo Ent.");
+        lblSongArtist.setText("Artist");
 
         lblSongDuration.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         lblSongDuration.setForeground(new java.awt.Color(255, 255, 255));
         lblSongDuration.setText("Duration");
 
         songDuration.setForeground(new java.awt.Color(255, 255, 255));
-        songDuration.setText("03:00");
+        songDuration.setText("00:00");
 
         lblSongDifficulty.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         lblSongDifficulty.setForeground(new java.awt.Color(255, 255, 255));
@@ -344,47 +365,51 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         SongDifficulty.setText("Hard");
 
         lblSongCreator.setForeground(new java.awt.Color(255, 255, 255));
-        lblSongCreator.setText("Tasya");
+        lblSongCreator.setText("Creator");
 
         SongCreator.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         SongCreator.setForeground(new java.awt.Color(255, 255, 255));
         SongCreator.setText("Creator");
+
+        SongDifficulty1.setForeground(new java.awt.Color(255, 255, 255));
+        SongDifficulty1.setText(">");
 
         javax.swing.GroupLayout pnlSongInfoLayout = new javax.swing.GroupLayout(pnlSongInfo);
         pnlSongInfo.setLayout(pnlSongInfoLayout);
         pnlSongInfoLayout.setHorizontalGroup(
             pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSongInfoLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(lblSongCover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlSongInfoLayout.createSequentialGroup()
                         .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSongTitle)
-                            .addComponent(lblSongArtist))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlSongInfoLayout.createSequentialGroup()
-                        .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSongDuration)
-                            .addComponent(songDuration))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                            .addGroup(pnlSongInfoLayout.createSequentialGroup()
+                                .addComponent(songDuration)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                                .addComponent(SongDifficulty1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSongDifficulty)
                             .addComponent(SongDifficulty))
                         .addGap(73, 73, 73)
                         .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSongCreator)
-                            .addComponent(SongCreator))
-                        .addGap(61, 61, 61))))
+                            .addComponent(SongCreator)
+                            .addComponent(lblSongArtist)))
+                    .addGroup(pnlSongInfoLayout.createSequentialGroup()
+                        .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSongTitle)
+                            .addComponent(lblSongCreator))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(200, 200, 200))
         );
         pnlSongInfoLayout.setVerticalGroup(
             pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSongInfoLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSongInfoLayout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(lblSongTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSongArtist)
+                .addComponent(lblSongCreator)
                 .addGap(18, 18, 18)
                 .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlSongInfoLayout.createSequentialGroup()
@@ -394,16 +419,14 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                     .addGroup(pnlSongInfoLayout.createSequentialGroup()
                         .addComponent(lblSongDifficulty)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SongDifficulty))
+                        .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SongDifficulty)
+                            .addComponent(SongDifficulty1)))
                     .addGroup(pnlSongInfoLayout.createSequentialGroup()
                         .addComponent(SongCreator)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblSongCreator)))
-                .addContainerGap(8, Short.MAX_VALUE))
-            .addGroup(pnlSongInfoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblSongCover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addComponent(lblSongArtist)))
+                .addGap(14, 14, 14))
         );
 
         pnlSongContainer.setBackground(new java.awt.Color(15, 23, 47));
@@ -457,28 +480,29 @@ public class SongSelectionFrame extends javax.swing.JFrame {
             pnlDifficultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDifficultyLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(btnEasy, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNormal, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnHard, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEasy, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnNormal)
+                .addGap(14, 14, 14)
+                .addComponent(btnHard, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         pnlDifficultyLayout.setVerticalGroup(
             pnlDifficultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDifficultyLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(pnlDifficultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNormal, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEasy, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHard, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlDifficultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlDifficultyLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(pnlDifficultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnNormal)
+                            .addComponent(btnEasy)
+                            .addComponent(btnHard)))
+                    .addGroup(pnlDifficultyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnlDifficultyLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnPlay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
 
         lblSongCover1.setBackground(new java.awt.Color(0, 102, 102));
@@ -492,7 +516,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         lblSongCover1Layout.setHorizontalGroup(
             lblSongCover1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lblSongCover1Layout.createSequentialGroup()
-                .addGap(87, 87, 87)
+                .addGap(69, 69, 69)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -500,7 +524,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
             lblSongCover1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lblSongCover1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -508,19 +532,25 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(scrLeaderboard, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-                    .addComponent(lblSongCover1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(scrSongList, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pnlSongInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
-                    .addComponent(pnlDifficulty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblSongCover1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(scrLeaderboard, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrSongList)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(pnlSongInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(pnlDifficulty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 18, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -531,26 +561,25 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(pnlSongInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrSongList)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlDifficulty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
+                        .addComponent(scrSongList, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(pnlDifficulty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(lblSongCover1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrLeaderboard, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12))
+                        .addComponent(scrLeaderboard, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -568,6 +597,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         selectedDifficulty = "Easy";
+        SongDifficulty.setText("Easy");
 
         btnEasy.setBackground(Color.GREEN);
 
@@ -576,12 +606,16 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
         btnHard.setBackground(
                 new Color(60,60,60));
+        
+        loadLeaderboard();
 
     }//GEN-LAST:event_btnEasyMouseClicked
 
     private void btnNormalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNormalMouseClicked
         // TODO add your handling code here:
         selectedDifficulty = "Normal";
+        SongDifficulty.setText("Normal");
+        
 
         btnNormal.setBackground(Color.YELLOW);
 
@@ -590,11 +624,14 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
         btnHard.setBackground(
                 new Color(60,60,60));
+        
+        loadLeaderboard();
     }//GEN-LAST:event_btnNormalMouseClicked
 
     private void btnHardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHardMouseClicked
         // TODO add your handling code here:
          selectedDifficulty = "Hard";
+         SongDifficulty.setText("Hard");
 
         btnHard.setBackground(Color.RED);
 
@@ -603,6 +640,8 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
         btnNormal.setBackground(
                 new Color(60,60,60));
+        
+        loadLeaderboard();
     }//GEN-LAST:event_btnHardMouseClicked
 
     private void btnPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPlayMouseClicked
@@ -658,16 +697,17 @@ public class SongSelectionFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel SongCreator;
     private javax.swing.JLabel SongDifficulty;
+    private javax.swing.JLabel SongDifficulty1;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnEasy;
     private javax.swing.JButton btnHard;
     private javax.swing.JButton btnNormal;
     private javax.swing.JButton btnPlay;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblLevel;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblSongArtist;
-    private javax.swing.JPanel lblSongCover;
     private javax.swing.JPanel lblSongCover1;
     private javax.swing.JLabel lblSongCreator;
     private javax.swing.JLabel lblSongDifficulty;
@@ -683,7 +723,6 @@ public class SongSelectionFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrLeaderboard;
     private javax.swing.JScrollPane scrSongList;
     private javax.swing.JLabel songDuration;
-    private javax.swing.JTextField txtSearchSong;
     // End of variables declaration//GEN-END:variables
 
     private void setBorder(CompoundBorder createCompoundBorder) {

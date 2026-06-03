@@ -6,37 +6,54 @@ package rhythmain.dao;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import rhythmain.utils.DBConnect;
+import java.sql.PreparedStatement;
 
 /**
  *
  * @author LENOVO
  */
+
 public class ScoreDAO {
-    public ResultSet getTop10Scores() {
 
-        try {
+        public ResultSet getTop10Scores(int songId, String difficulty) 
+        {
 
-            DBConnect db = new DBConnect();
+            try {
 
-            String sql =
-                "SELECT u.username, MAX(s.score) AS best_score " +
-                "FROM scores s " +
-                "JOIN users u ON s.user_id = u.user_id " +
-                "GROUP BY u.user_id " +
-                "ORDER BY best_score DESC " +
-                "LIMIT 10";
+                DBConnect db =
+                    new DBConnect();
 
-            Statement stmt =
-                db.con.createStatement();
+                String sql =
+                    "SELECT u.username, s.score " +
+                    "FROM scores s " +
+                    "JOIN users u " +
+                    "ON u.user_id = s.user_id " +
+                    "JOIN beatmaps b " +
+                    "ON b.beatmap_id = s.beatmap_id " +
+                    "WHERE b.song_id = ? " +
+                    "AND b.difficulty_name = ? " +
+                    "ORDER BY s.score DESC " +
+                    "LIMIT 10";
 
-            return stmt.executeQuery(sql);
+                PreparedStatement ps =
+                    db.con.prepareStatement(sql);
 
-        } catch(Exception e) {
+                ps.setInt(1, songId);
 
-            e.printStackTrace();
+                ps.setString(
+                    2,
+                    difficulty
+                );
 
+
+                return ps.executeQuery();
+
+            } catch(Exception e) {
+
+                e.printStackTrace();
+
+            }
+
+            return null;
         }
-
-        return null;
-    }
 }
