@@ -9,26 +9,64 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import rhythmain.utils.DBConnect;
+import rhythmain.utils.ScoreManager;
 /**
  *
  * @author Admin
  */
 public class ScoreResultFrame extends javax.swing.JFrame {
+    char grade;
+    int idBeatmap;
+    ScoreManager skor = new ScoreManager();
     
-    String name = "Contoh Beatmap";
-    String creator = "Author";
-    LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    String formatDateTime = now.format(formatter);
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ScoreResultFrame.class.getName());
-
     /**
      * Creates new form ScoreResultFrame
      */   
-    public ScoreResultFrame() {
+    public ScoreResultFrame(int idBeatmap) {
         initComponents();
+        DBConnect koneksi = new DBConnect();
+        ShowBeatmapInfo(idBeatmap);
+        ShowGrade();
+        ShowResultScore();
+        ShowPerformance();
     }
-
+    
+    public void  ShowBeatmapInfo(int idBeatmap){
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
+        String formatDateTime = now.format(formatter);
+    
+        jLabel_namaBeatmap.setText("Hatsune Miku no Shoushitsu");
+        jLabel_creatorBeatmap.setText("cosMo@BousouP");
+        jLabel_clearedTimestamp.setText(formatDateTime);
+    }
+    
+    public void ShowResultScore(){
+        jPerfectCounter.setText(String.valueOf(skor.getPerfectHits()));
+        jGoodCounter.setText(String.valueOf(skor.getGoodHits()));
+        jBadCounter.setText(String.valueOf(skor.getBadHits()));
+        jMissCounter.setText(String.valueOf(skor.getMissHits()));
+        jComboCounter.setText(String.valueOf(skor.getMaxCombo()));
+        jComboCounter.setText(String.format("%.2f%%", skor.getAccuracy()));
+    }
+    
+    public void ShowGrade(){
+        if (skor.getAccuracy() >= 95.00){
+            jLabel_grade.setText("S");
+        } else if (skor.getAccuracy() >= 90.00){
+            jLabel_grade.setText("A");
+        } else if (skor.getAccuracy() >= 80.00){
+            jLabel_grade.setText("B");
+        } else if (skor.getAccuracy() >= 70.00){
+            jLabel_grade.setText("C");
+        } else{
+            jLabel_grade.setText("D");
+        }
+    }
+    
+    public void ShowPerformance(){
+        jLabel_totalScore.setText(String.valueOf(skor.getTotalScore()));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,15 +87,24 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         jLabel_missCount = new javax.swing.JLabel();
         jLabel_comboCount = new javax.swing.JLabel();
         jLabel_accuracy = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPerfectCounter = new javax.swing.JLabel();
+        jGoodCounter = new javax.swing.JLabel();
+        jBadCounter = new javax.swing.JLabel();
+        jMissCounter = new javax.swing.JLabel();
+        jComboCounter = new javax.swing.JLabel();
+        jAccuracy = new javax.swing.JLabel();
+        jButton_Return = new javax.swing.JButton();
+        jPanel_Performances = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jLabel_totalScore = new javax.swing.JLabel();
+        jLabel_tag = new javax.swing.JLabel();
+        jPanel_Grades = new javax.swing.JPanel();
         jLabel_grade = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(0, 153, 255));
+        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
 
         jPanel_Header.setBackground(new java.awt.Color(20, 20, 30));
@@ -65,14 +112,14 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         jLabel_namaBeatmap.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel_namaBeatmap.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_namaBeatmap.setLabelFor(jLabel_namaBeatmap);
-        jLabel_namaBeatmap.setText(name);
+        jLabel_namaBeatmap.setText("Beatmap Title");
 
         jLabel_creatorBeatmap.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_creatorBeatmap.setLabelFor(jLabel_creatorBeatmap);
-        jLabel_creatorBeatmap.setText(creator);
+        jLabel_creatorBeatmap.setText("Creator");
 
         jLabel_clearedTimestamp.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_clearedTimestamp.setText(formatDateTime);
+        jLabel_clearedTimestamp.setText("clearance timestamp");
 
         javax.swing.GroupLayout jPanel_HeaderLayout = new javax.swing.GroupLayout(jPanel_Header);
         jPanel_Header.setLayout(jPanel_HeaderLayout);
@@ -121,11 +168,47 @@ public class ScoreResultFrame extends javax.swing.JFrame {
 
         jLabel_comboCount.setFont(jLabel_goodCount.getFont());
         jLabel_comboCount.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_comboCount.setText("Combo");
+        jLabel_comboCount.setText("Max Combo");
 
         jLabel_accuracy.setFont(jLabel_goodCount.getFont());
         jLabel_accuracy.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_accuracy.setText("Accuracy");
+
+        jPerfectCounter.setFont(jLabel_goodCount.getFont());
+        jPerfectCounter.setForeground(new java.awt.Color(255, 255, 255));
+        jPerfectCounter.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPerfectCounter.setText("0");
+        jPerfectCounter.setToolTipText("");
+
+        jGoodCounter.setFont(jLabel_comboCount.getFont());
+        jGoodCounter.setForeground(new java.awt.Color(255, 255, 255));
+        jGoodCounter.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jGoodCounter.setText("0");
+        jGoodCounter.setToolTipText("");
+
+        jBadCounter.setFont(jLabel_comboCount.getFont());
+        jBadCounter.setForeground(new java.awt.Color(255, 255, 255));
+        jBadCounter.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jBadCounter.setText("0");
+        jBadCounter.setToolTipText("");
+
+        jMissCounter.setFont(jLabel_comboCount.getFont());
+        jMissCounter.setForeground(new java.awt.Color(255, 255, 255));
+        jMissCounter.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jMissCounter.setText("0");
+        jMissCounter.setToolTipText("");
+
+        jComboCounter.setFont(jLabel_comboCount.getFont());
+        jComboCounter.setForeground(new java.awt.Color(255, 255, 255));
+        jComboCounter.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jComboCounter.setText("0");
+        jComboCounter.setToolTipText("");
+
+        jAccuracy.setFont(jLabel_comboCount.getFont());
+        jAccuracy.setForeground(new java.awt.Color(255, 255, 255));
+        jAccuracy.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jAccuracy.setText("0");
+        jAccuracy.setToolTipText("");
 
         javax.swing.GroupLayout jPanel_StatsLayout = new javax.swing.GroupLayout(jPanel_Stats);
         jPanel_Stats.setLayout(jPanel_StatsLayout);
@@ -140,72 +223,111 @@ public class ScoreResultFrame extends javax.swing.JFrame {
                     .addComponent(jLabel_missCount)
                     .addComponent(jLabel_comboCount)
                     .addComponent(jLabel_accuracy))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jAccuracy, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(jComboCounter, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(jMissCounter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBadCounter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jGoodCounter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPerfectCounter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
         jPanel_StatsLayout.setVerticalGroup(
             jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_StatsLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(jLabel_perfectCount)
+                .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_perfectCount)
+                    .addComponent(jPerfectCounter))
                 .addGap(38, 38, 38)
-                .addComponent(jLabel_goodCount)
+                .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_goodCount)
+                    .addComponent(jGoodCounter))
                 .addGap(38, 38, 38)
-                .addComponent(jLabel_badCount)
+                .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_badCount)
+                    .addComponent(jBadCounter))
                 .addGap(38, 38, 38)
-                .addComponent(jLabel_missCount)
+                .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_missCount)
+                    .addComponent(jMissCounter))
                 .addGap(38, 38, 38)
-                .addComponent(jLabel_comboCount)
+                .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_comboCount)
+                    .addComponent(jComboCounter))
                 .addGap(38, 38, 38)
-                .addComponent(jLabel_accuracy)
+                .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_accuracy)
+                    .addComponent(jAccuracy))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Continue");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButton_Return.setText("Continue");
+        jButton_Return.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                jButton_ReturnMouseClicked(evt);
             }
         });
 
+        jPanel_Performances.setBackground(new java.awt.Color(0, 153, 255));
+
         jLabel2.setText("Performance:");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jLabel_totalScore.setFont(jLabel_goodCount.getFont());
+        jLabel_totalScore.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_totalScore.setText("000000000");
+
+        jLabel_tag.setText("Tag 1");
+
+        javax.swing.GroupLayout jPanel_PerformancesLayout = new javax.swing.GroupLayout(jPanel_Performances);
+        jPanel_Performances.setLayout(jPanel_PerformancesLayout);
+        jPanel_PerformancesLayout.setHorizontalGroup(
+            jPanel_PerformancesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_PerformancesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGroup(jPanel_PerformancesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel_totalScore, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel_PerformancesLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel_tag, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanel_PerformancesLayout.setVerticalGroup(
+            jPanel_PerformancesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_PerformancesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_totalScore)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel_tag)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        jPanel_Grades.setBackground(new java.awt.Color(0, 153, 255));
+
         jLabel_grade.setFont(new java.awt.Font("Engravers MT", 3, 175)); // NOI18N
-        jLabel_grade.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_grade.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel_grade.setText("S");
 
         jLabel1.setText("GRADE:");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel_GradesLayout = new javax.swing.GroupLayout(jPanel_Grades);
+        jPanel_Grades.setLayout(jPanel_GradesLayout);
+        jPanel_GradesLayout.setHorizontalGroup(
+            jPanel_GradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_GradesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_GradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel_grade, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanel_GradesLayout.setVerticalGroup(
+            jPanel_GradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_GradesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -221,14 +343,14 @@ public class ScoreResultFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(88, 88, 88)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                    .addComponent(jButton_Return)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel_Stats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(194, Short.MAX_VALUE))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel_Grades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel_Performances, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,20 +360,20 @@ public class ScoreResultFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel_Stats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel_Grades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel_Performances, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton_Return)))
                 .addGap(0, 44, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void jButton_ReturnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReturnMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_jButton_ReturnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -262,6 +384,7 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        ScoreResultFrame frme = new ScoreResultFrame(1);
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -270,17 +393,21 @@ public class ScoreResultFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getGlobal().log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
     
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ScoreResultFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ScoreResultFrame(1).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jAccuracy;
+    private javax.swing.JLabel jBadCounter;
+    private javax.swing.JButton jButton_Return;
+    private javax.swing.JLabel jComboCounter;
+    private javax.swing.JLabel jGoodCounter;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_accuracy;
@@ -293,9 +420,13 @@ public class ScoreResultFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_missCount;
     private javax.swing.JLabel jLabel_namaBeatmap;
     private javax.swing.JLabel jLabel_perfectCount;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel_tag;
+    private javax.swing.JLabel jLabel_totalScore;
+    private javax.swing.JLabel jMissCounter;
+    private javax.swing.JPanel jPanel_Grades;
     private javax.swing.JPanel jPanel_Header;
+    private javax.swing.JPanel jPanel_Performances;
     private javax.swing.JPanel jPanel_Stats;
+    private javax.swing.JLabel jPerfectCounter;
     // End of variables declaration//GEN-END:variables
 }

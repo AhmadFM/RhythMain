@@ -96,7 +96,7 @@ public class ScoreManager {
         // Kalkulasi skor dengan multiplier combo
         int scoreToAdd = baseWeight + (baseWeight * currentCombo / 25);
         totalScore += scoreToAdd;
-        return totalScore;
+        return scoreToAdd;
     }
 
     // Mengkalkulasi akurasi saat ini.
@@ -146,6 +146,10 @@ public class ScoreManager {
 
     public int getGoodHits() {
         return goodHits;
+    }
+    
+    public int getBadHits() {
+        return badHits;
     }
 
     public int getMissHits() {
