@@ -12,9 +12,12 @@ import javax.sound.sampled.Clip;
 public class AudioPlayer {
     private Clip audioClip;
     private long currentFrame; // Menyimpan posisi audio saat di-pause
+    private String filePath;
 
     // 1. Method untuk memuat file audio ke memori
     public void loadAudio(String filePath) {
+        this.filePath = filePath;
+        
         try {
             File audioFile = new File(filePath);
             if (!audioFile.exists()) {
@@ -48,7 +51,7 @@ public class AudioPlayer {
 
         new Thread(() -> {
             if (!audioClip.isRunning()) {
-                audioClip.setFramePosition((int) currentFrame); // Lanjut dari posisi terakhir
+//                audioClip.setFramePosition((int) currentFrame); // Lanjut dari posisi terakhir
                 audioClip.start();
             }
         }).start();

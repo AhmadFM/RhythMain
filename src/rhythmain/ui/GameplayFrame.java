@@ -52,6 +52,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     GameplaySetting gameplaySetting;
     
     // Apakah game sedang berjalan.
+    boolean gamePaused = false;
     boolean gameBerjalan = true;
     // Skor game.
     int skor = 0;
@@ -88,6 +89,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         senarButtonY = senarD.getSize().height;
         // Sembunyikan noteInfoText (Teks informasi buat Perfect, Miss, Offbeat)
         noteInfoText.setVisible(false);
+        pausedText.setVisible(false);
 
         // Baca setting.
         bacaSetting();
@@ -136,6 +138,10 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         
         // Jalankan looping.
         Timer mainLoop = new Timer(16, e -> {
+            // Pause.
+            if (gamePaused) {
+                return;
+            }
             // Stop loop apabila game sudah dihentikan.
             if (!gameBerjalan) {
                 ((Timer)e.getSource()).stop();
@@ -233,23 +239,31 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     
     private void cekNoteApakahKena(JPanel senar, Queue<NoteSenar> daftarNoteSenar) {
         // Ambil note paling pertama pada senar.
-        NoteSenar notePertama = daftarNoteSenar.poll();
+        NoteSenar notePertama = daftarNoteSenar.peek();
         // Kalau ga ada note sama sekali dalam senar, hentikan eksekusi.
         if (notePertama == null) {
             return;
         }
        
         // Cek apakah note kena tombol senar.
-        String accuracy = scoreManager.registerHit(notePertama.y - senarButtonY);
-        if (accuracy == "miss") {
-            noteApabilaMiss(senar);
-        } else {
-            noteApabilaKena(senar, accuracy, notePertama.note.hitsound);
-        }
+        int selisihJarak = notePertama.y - senarButtonY;
+        if (selisihJarak > -200) {
+            // Hapus note.
+            daftarNoteSenar.remove();
+            
+            int expandHit = Math.max((int)(((kecepatanNote / 2) - 1) * 3), 0);
         
-        senar.remove(notePertama.component);
-        senar.revalidate();
-        senar.repaint();
+            String accuracy = scoreManager.registerHit(selisihJarak - (expandHit));
+            if (accuracy == "miss") {
+                noteApabilaMiss(senar);
+            } else {
+                noteApabilaKena(senar, accuracy, notePertama.note.hitsound);
+            }
+
+            senar.remove(notePertama.component);
+            senar.revalidate();
+            senar.repaint();
+        }
     }
     
     private void noteApabilaKena(JPanel senar, String accuracy, String soundEffectName) {
@@ -375,6 +389,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         jPanel10 = new javax.swing.JPanel();
         noteInfoText = new javax.swing.JLabel();
         skorText = new javax.swing.JLabel();
+        pausedText = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -412,25 +427,36 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         skorText.setForeground(new java.awt.Color(255, 255, 255));
         skorText.setText("Skor: 0");
 
+        pausedText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        pausedText.setForeground(new java.awt.Color(255, 255, 255));
+        pausedText.setText("Paused");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(768, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addComponent(pausedText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(skorText)
                 .addContainerGap())
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(121, 121, 121)
                 .addComponent(noteInfoText)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(646, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(skorText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 434, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(skorText))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(pausedText)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 420, Short.MAX_VALUE)
                 .addComponent(noteInfoText)
                 .addGap(59, 59, 59))
         );
@@ -689,6 +715,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel noteInfoText;
+    private javax.swing.JLabel pausedText;
     private javax.swing.JPanel senarD;
     private javax.swing.JPanel senarDButton;
     private javax.swing.JLabel senarDButtonLabel;
@@ -717,20 +744,34 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     public void keyReleased(KeyEvent e) {
         System.out.println("Key pressed");
         
-        char senar1 = gameplaySetting.getSenar1();
-        char senar2 = gameplaySetting.getSenar2();
-        char senar3 = gameplaySetting.getSenar3();
-        char senar4 = gameplaySetting.getSenar4();
         char keyChar = Character.toLowerCase(e.getKeyChar());
         
-        if (keyChar == senar1) {
-             cekNoteApakahKena(senarD, daftarNoteSenarD);
-        } else if (keyChar == senar2) {
-             cekNoteApakahKena(senarF, daftarNoteSenarF);
-        } else if (keyChar == senar3) {
-             cekNoteApakahKena(senarJ, daftarNoteSenarJ);
-        } else if (keyChar == senar4) {
-             cekNoteApakahKena(senarK, daftarNoteSenarK);
+        if (!gamePaused) {
+             char senar1 = gameplaySetting.getSenar1();
+            char senar2 = gameplaySetting.getSenar2();
+            char senar3 = gameplaySetting.getSenar3();
+            char senar4 = gameplaySetting.getSenar4();
+            
+
+            if (keyChar == senar1) {
+                 cekNoteApakahKena(senarD, daftarNoteSenarD);
+            } else if (keyChar == senar2) {
+                 cekNoteApakahKena(senarF, daftarNoteSenarF);
+            } else if (keyChar == senar3) {
+                 cekNoteApakahKena(senarJ, daftarNoteSenarJ);
+            } else if (keyChar == senar4) {
+                 cekNoteApakahKena(senarK, daftarNoteSenarK);
+            } else if (keyChar == 'p') {
+                pausedText.setVisible(true);
+                gamePaused = true;
+                audioPlayer.pause();
+            }
+        } else {
+            if (keyChar == 'p') {
+                pausedText.setVisible(false);
+                gamePaused = false;
+                audioPlayer.resume();
+            }
         }
     }
     
