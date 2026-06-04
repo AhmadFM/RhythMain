@@ -160,6 +160,9 @@ public class ScoreManager {
         return perfectHits+goodHits+badHits;
     }
     
+    public int getTotalNotesPassed(){
+        return totalNotesPassed;
+    }
     public boolean isItFullCombo(){
         return maxCombo == totalNotesPassed;
     }

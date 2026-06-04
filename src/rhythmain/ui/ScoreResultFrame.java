@@ -4,29 +4,28 @@
  */
 package rhythmain.ui;
 
+import java.awt.Color;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+import java.util.List;
+import javax.swing.JLabel;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import rhythmain.utils.DBConnect;
 import rhythmain.utils.ScoreManager;
 import rhythmain.utils.UserSession;
+import rhythmain.utils.PerformanceEvaluator;
 /**
  *
  * @author Admin
  */
-public class ScoreResultFrame extends javax.swing.JFrame {
+public final class ScoreResultFrame extends javax.swing.JFrame {
     char grade;
     int idBeatmap;
     LocalDateTime now = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
     String formatDateTime = now.format(formatter);
-    
     // User Stat
     private int stats_id    = 0;
     private int level       = 0;
@@ -52,23 +51,24 @@ public class ScoreResultFrame extends javax.swing.JFrame {
     
     /**
      * Creates new form ScoreResultFrame
+     * @param idBeatmap
      */   
     public ScoreResultFrame(int idBeatmap) {
         initComponents();
-        
         ShowBeatmapInfo(idBeatmap);
-        ShowGrade();
-        ShowResultScore();
-        ShowPerformance();
-        
         
         int uid = UserSession.userId;   
         GetUserStats(uid);
         StoreScore(uid, idBeatmap);
         UpdateUserStats(uid);
+        
+        ShowGrade();
+        ShowResultScore();
+        ShowPerformance();
+        ShowLabel();
     }
     
-    public void  ShowBeatmapInfo(int idBeatmap){
+    private void  ShowBeatmapInfo(int idBeatmap){
         String stmt = "SELECT s.title, s.artist, s.creator, s.bpm, s.audio_file_path FROM beatmaps b INNER JOIN songs s ON b.song_id = s.song_id WHERE b.beatmap_id = ?";
         try{
             PreparedStatement pStmt = koneksi.con.prepareStatement(stmt);
@@ -98,7 +98,7 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         jAccuracy.setText(String.format("%.2f%%", skor.getAccuracy()));
     }
     
-    public String ShowGrade(){
+    public final String ShowGrade(){
         if (skor.getAccuracy() >= 95.00){
             jLabel_grade.setText("S");
             return "S";
@@ -120,8 +120,9 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         }
     }
     
-    public void ShowPerformance(){
+    private void ShowPerformance(){
         jLabel_totalScore.setText(String.valueOf(skor.getTotalScore()));
+        
     }
     
     public void StoreScore(int uid, int idBeatmap){
@@ -230,6 +231,24 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         }
     }
     
+    private void ShowLabel(){
+        jPanel_labelBox.removeAll(); 
+        PerformanceEvaluator evaluator = new PerformanceEvaluator();
+        List<String> earnedLabels = evaluator.generatePerformanceLabels(totalHits, perfectCount, maxCombo, skor.getTotalNotesPassed(), ShowGrade());
+
+        for (String labelText : earnedLabels) {
+            JLabel uiLabel = new JLabel(" " + labelText + " ");
+            uiLabel.setOpaque(true);
+            uiLabel.setBackground(Color.DARK_GRAY);
+            uiLabel.setForeground(Color.WHITE);
+
+            jPanel_labelBox.add(uiLabel);
+        }
+
+        jPanel_labelBox.revalidate();
+        jPanel_labelBox.repaint();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -239,10 +258,7 @@ public class ScoreResultFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel_Header = new javax.swing.JPanel();
-        jLabel_namaBeatmap = new javax.swing.JLabel();
-        jLabel_creatorBeatmap = new javax.swing.JLabel();
-        jLabel_clearedTimestamp = new javax.swing.JLabel();
+        jPanel_BG = new javax.swing.JPanel();
         jPanel_Stats = new javax.swing.JPanel();
         jLabel_perfectCount = new javax.swing.JLabel();
         jLabel_goodCount = new javax.swing.JLabel();
@@ -256,62 +272,32 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         jMissCounter = new javax.swing.JLabel();
         jComboCounter = new javax.swing.JLabel();
         jAccuracy = new javax.swing.JLabel();
-        jButton_Return = new javax.swing.JButton();
-        jPanel_Performances = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel_totalScore = new javax.swing.JLabel();
-        jLabel_tag = new javax.swing.JLabel();
         jPanel_Grades = new javax.swing.JPanel();
         jLabel_grade = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel_Performances = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel_totalScore = new javax.swing.JLabel();
+        jPanel_labelBox = new javax.swing.JPanel();
+        jButton_Return = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel_namaBeatmap = new javax.swing.JLabel();
+        jLabel_creatorBeatmap = new javax.swing.JLabel();
+        jLabel_clearedTimestamp = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("RhythMain - Score Result");
+        setAutoRequestFocus(false);
         setBackground(new java.awt.Color(0, 153, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setEnabled(false);
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
-        jPanel_Header.setBackground(new java.awt.Color(20, 20, 30));
-
-        jLabel_namaBeatmap.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel_namaBeatmap.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_namaBeatmap.setLabelFor(jLabel_namaBeatmap);
-        jLabel_namaBeatmap.setText("Beatmap Title - Artist");
-
-        jLabel_creatorBeatmap.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_creatorBeatmap.setLabelFor(jLabel_creatorBeatmap);
-        jLabel_creatorBeatmap.setText("Creator");
-
-        jLabel_clearedTimestamp.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_clearedTimestamp.setText("clearance timestamp");
-
-        javax.swing.GroupLayout jPanel_HeaderLayout = new javax.swing.GroupLayout(jPanel_Header);
-        jPanel_Header.setLayout(jPanel_HeaderLayout);
-        jPanel_HeaderLayout.setHorizontalGroup(
-            jPanel_HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_HeaderLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel_HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel_clearedTimestamp)
-                    .addComponent(jLabel_creatorBeatmap)
-                    .addComponent(jLabel_namaBeatmap))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel_HeaderLayout.setVerticalGroup(
-            jPanel_HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_HeaderLayout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(jLabel_namaBeatmap)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_creatorBeatmap)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_clearedTimestamp)
-                .addGap(15, 15, 15))
-        );
+        jPanel_BG.setBackground(new java.awt.Color(15, 23, 42));
 
         jPanel_Stats.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel_Stats.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 255)));
         jPanel_Stats.setMaximumSize(new java.awt.Dimension(400, 600));
         jPanel_Stats.setMinimumSize(new java.awt.Dimension(150, 500));
         jPanel_Stats.setPreferredSize(new java.awt.Dimension(350, 425));
@@ -381,7 +367,7 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         jPanel_StatsLayout.setHorizontalGroup(
             jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_StatsLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_perfectCount)
                     .addComponent(jLabel_goodCount)
@@ -389,20 +375,20 @@ public class ScoreResultFrame extends javax.swing.JFrame {
                     .addComponent(jLabel_missCount)
                     .addComponent(jLabel_comboCount)
                     .addComponent(jLabel_accuracy))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jAccuracy, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(jComboCounter, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(jAccuracy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboCounter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jMissCounter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBadCounter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jGoodCounter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPerfectCounter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(43, 43, 43))
+                    .addComponent(jPerfectCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
         );
         jPanel_StatsLayout.setVerticalGroup(
             jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_StatsLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel_StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_perfectCount)
                     .addComponent(jPerfectCounter))
@@ -429,29 +415,63 @@ public class ScoreResultFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton_Return.setBackground(new java.awt.Color(0, 153, 255));
-        jButton_Return.setFont(jLabel_goodCount.getFont());
-        jButton_Return.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Return.setText("Continue");
-        jButton_Return.setBorder(null);
-        jButton_Return.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton_ReturnMouseClicked(evt);
-            }
-        });
+        jPanel_Grades.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel_Grades.setBorder(jPanel_Stats.getBorder());
+
+        jLabel_grade.setFont(new java.awt.Font("Engravers MT", 3, 175)); // NOI18N
+        jLabel_grade.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_grade.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel_grade.setText("S");
+
+        jLabel1.setFont(new java.awt.Font("Verdana", 3, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("GRADES");
+
+        javax.swing.GroupLayout jPanel_GradesLayout = new javax.swing.GroupLayout(jPanel_Grades);
+        jPanel_Grades.setLayout(jPanel_GradesLayout);
+        jPanel_GradesLayout.setHorizontalGroup(
+            jPanel_GradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_GradesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_GradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel_grade, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel_GradesLayout.setVerticalGroup(
+            jPanel_GradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_GradesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_grade)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
 
         jPanel_Performances.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel_Performances.setBorder(jPanel_Stats.getBorder());
 
+        jLabel2.setFont(new java.awt.Font("Verdana", 3, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Performance:");
+        jLabel2.setText("PERFORMANCE");
 
         jLabel_totalScore.setFont(jLabel_goodCount.getFont());
         jLabel_totalScore.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_totalScore.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel_totalScore.setText("000000000");
 
-        jLabel_tag.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_tag.setText("Tag 1");
+        jPanel_labelBox.setOpaque(false);
+
+        javax.swing.GroupLayout jPanel_labelBoxLayout = new javax.swing.GroupLayout(jPanel_labelBox);
+        jPanel_labelBox.setLayout(jPanel_labelBoxLayout);
+        jPanel_labelBoxLayout.setHorizontalGroup(
+            jPanel_labelBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel_labelBoxLayout.setVerticalGroup(
+            jPanel_labelBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel_PerformancesLayout = new javax.swing.GroupLayout(jPanel_Performances);
         jPanel_Performances.setLayout(jPanel_PerformancesLayout);
@@ -464,7 +484,7 @@ public class ScoreResultFrame extends javax.swing.JFrame {
                     .addGroup(jPanel_PerformancesLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel_tag, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel_labelBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel_PerformancesLayout.setVerticalGroup(
@@ -474,74 +494,112 @@ public class ScoreResultFrame extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_totalScore)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel_tag)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel_labelBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jPanel_Grades.setBackground(new java.awt.Color(0, 153, 255));
+        jButton_Return.setBackground(new java.awt.Color(0, 153, 255));
+        jButton_Return.setFont(jLabel_goodCount.getFont());
+        jButton_Return.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Return.setText("Continue");
+        jButton_Return.setBorder(null);
+        jButton_Return.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_ReturnMouseClicked(evt);
+            }
+        });
 
-        jLabel_grade.setFont(new java.awt.Font("Engravers MT", 3, 175)); // NOI18N
-        jLabel_grade.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_grade.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel_grade.setText("S");
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 0, 0, 0, new java.awt.Color(0, 153, 255)));
+        jPanel1.setOpaque(false);
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("GRADE:");
+        jLabel_namaBeatmap.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel_namaBeatmap.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_namaBeatmap.setLabelFor(jLabel_namaBeatmap);
+        jLabel_namaBeatmap.setText("Beatmap Title - Artist");
 
-        javax.swing.GroupLayout jPanel_GradesLayout = new javax.swing.GroupLayout(jPanel_Grades);
-        jPanel_Grades.setLayout(jPanel_GradesLayout);
-        jPanel_GradesLayout.setHorizontalGroup(
-            jPanel_GradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_GradesLayout.createSequentialGroup()
+        jLabel_creatorBeatmap.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel_creatorBeatmap.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_creatorBeatmap.setLabelFor(jLabel_creatorBeatmap);
+        jLabel_creatorBeatmap.setText("Creator");
+
+        jLabel_clearedTimestamp.setFont(new java.awt.Font("Verdana", 2, 12)); // NOI18N
+        jLabel_clearedTimestamp.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_clearedTimestamp.setText("clearance timestamp");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel_GradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel_grade, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel_clearedTimestamp)
+                    .addComponent(jLabel_creatorBeatmap)
+                    .addComponent(jLabel_namaBeatmap))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel_GradesLayout.setVerticalGroup(
-            jPanel_GradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_GradesLayout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel_namaBeatmap)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_grade)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jLabel_creatorBeatmap)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_clearedTimestamp)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel_BGLayout = new javax.swing.GroupLayout(jPanel_BG);
+        jPanel_BG.setLayout(jPanel_BGLayout);
+        jPanel_BGLayout.setHorizontalGroup(
+            jPanel_BGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_BGLayout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addGroup(jPanel_BGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel_BGLayout.createSequentialGroup()
+                        .addComponent(jPanel_Stats, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel_BGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel_Grades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel_Performances, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton_Return, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(129, Short.MAX_VALUE))
+        );
+        jPanel_BGLayout.setVerticalGroup(
+            jPanel_BGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_BGLayout.createSequentialGroup()
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addGroup(jPanel_BGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel_BGLayout.createSequentialGroup()
+                        .addComponent(jPanel_Grades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel_Performances, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_Return))
+                    .addComponent(jPanel_Stats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel_Header, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jPanel_Stats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel_Grades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel_Performances, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_Return, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(104, Short.MAX_VALUE))
+            .addComponent(jPanel_BG, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel_Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel_Grades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel_Performances, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_Return, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel_Stats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 67, Short.MAX_VALUE))
+                .addComponent(jPanel_BG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_ReturnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReturnMouseClicked
@@ -554,28 +612,28 @@ public class ScoreResultFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getGlobal().log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//    
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(() -> new ScoreResultFrame(1).setVisible(true));
-//    }
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getGlobal().log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+    
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new ScoreResultFrame(1).setVisible(true));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jAccuracy;
@@ -595,13 +653,14 @@ public class ScoreResultFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_missCount;
     private javax.swing.JLabel jLabel_namaBeatmap;
     private javax.swing.JLabel jLabel_perfectCount;
-    private javax.swing.JLabel jLabel_tag;
     private javax.swing.JLabel jLabel_totalScore;
     private javax.swing.JLabel jMissCounter;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel_BG;
     private javax.swing.JPanel jPanel_Grades;
-    private javax.swing.JPanel jPanel_Header;
     private javax.swing.JPanel jPanel_Performances;
     private javax.swing.JPanel jPanel_Stats;
+    private javax.swing.JPanel jPanel_labelBox;
     private javax.swing.JLabel jPerfectCounter;
     // End of variables declaration//GEN-END:variables
 }
