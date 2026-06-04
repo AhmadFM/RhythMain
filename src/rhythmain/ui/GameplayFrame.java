@@ -106,7 +106,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         senarJButtonLabel.setText(String.valueOf(gameplaySetting.getSenar3()).toUpperCase());
         senarKButtonLabel.setText(String.valueOf(gameplaySetting.getSenar4()).toUpperCase());
         
-        kecepatanNote = gameplaySetting.getScrollSpeed();
+        kecepatanNote = gameplaySetting.getScrollSpeed() * 2;
     }
     
     private void bacaBeatmap() {
@@ -150,7 +150,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         mainLoop.start(); 
         
         System.out.println("durasi " + audioPlayer.getDuration());
-        Timer timerDurasiLagu = new Timer(audioPlayer.getDuration(), e -> {
+        Timer timerDurasiLagu = new Timer(audioPlayer.getDuration() + 5000, e -> {
             apabilaLaguSelesai();
             ((Timer)e.getSource()).stop();
         });
@@ -253,6 +253,8 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     }
     
     private void noteApabilaKena(JPanel senar, String accuracy, String soundEffectName) {
+        System.out.println("Sound Effect: " + soundEffectName);
+        
         switch (accuracy) {
             case "perfect" -> {
                 senar.setBackground(Color.green);
@@ -279,7 +281,11 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         
         AudioPlayer soundEffect = new AudioPlayer();
         Path soundFolder = Path.of(song.getAudioPath()).getParent();
-        soundEffect.loadAudio(soundFolder + "\\" + soundEffectName);
+        String finalSoundEffectName = soundEffectName;
+        if ("default".equals(soundEffectName)) {
+            finalSoundEffectName = "normal-hitnormal.wav";
+        }
+        soundEffect.loadAudio(soundFolder + "\\" + finalSoundEffectName);
         soundEffect.play();
         
         int totalSkor = scoreManager.getTotalScore();

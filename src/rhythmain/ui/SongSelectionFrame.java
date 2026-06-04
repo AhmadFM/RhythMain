@@ -14,8 +14,10 @@ import java.sql.ResultSet;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.border.CompoundBorder;
+import rhythmain.audio.AudioPlayer;
 import rhythmain.dao.ScoreDAO;
 import rhythmain.ui.ScoreCardPanel;
+import rhythmain.utils.UserSession;
 
 
 /**
@@ -39,13 +41,13 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         lblSongCreator.setText("");
         songDuration.setText( "00:00");
         SongDifficulty.setText("");
-         pnlLeaderboardContainer.setLayout(
+        lblUsername.setText(UserSession.username);
+        pnlLeaderboardContainer.setLayout(
                         new BoxLayout(
                                 pnlLeaderboardContainer,
                                 BoxLayout.Y_AXIS
                         )
                 );
-        
     }
     private Song selectedSong = null;
     private String selectedDifficulty = "-";
@@ -82,6 +84,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
                         showSongInfo(song);
                         selectedSong = song;
+                        loadLeaderboard();
                     }
 
                 }
@@ -96,7 +99,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
     }
     private void showSongInfo(Song song) {
 
-         selectedSong = song;
+        selectedSong = song;
         
         lblSongTitle.setText(
                 song.getTitle()
@@ -109,8 +112,15 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         lblSongCreator.setText(
                 song.getCreator()
         );
+        
+        AudioPlayer player = new AudioPlayer();
+        player.loadAudio(song.getAudioPath());
+        int totalSeconds = player.getDuration() / 1_000;
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        
         songDuration.setText(
-            "03:00"
+            String.format("%02d:%02d", minutes, seconds)
         );
         
 //        SongDifficulty.setText("");
@@ -275,6 +285,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
         lblUsername.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsername.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblUsername.setText("Player 3");
 
         lblLevel.setForeground(java.awt.Color.cyan);
@@ -289,7 +300,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         pnlHeaderLayout.setHorizontalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
-                .addContainerGap(132, Short.MAX_VALUE)
+                .addContainerGap(130, Short.MAX_VALUE)
                 .addComponent(lblLogo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
@@ -312,9 +323,7 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtSearchSong, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblLevel)
                         .addContainerGap())
@@ -387,8 +396,11 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                     .addGroup(pnlSongInfoLayout.createSequentialGroup()
                         .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSongDuration)
-                            .addComponent(songDuration))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                            .addGroup(pnlSongInfoLayout.createSequentialGroup()
+                                .addComponent(songDuration)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                .addComponent(SongDifficulty1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addGroup(pnlSongInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSongDifficulty)
                             .addComponent(SongDifficulty))
@@ -587,6 +599,9 @@ public class SongSelectionFrame extends javax.swing.JFrame {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        MainMenuFrame frame = new MainMenuFrame();
+        frame.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
@@ -647,11 +662,11 @@ public class SongSelectionFrame extends javax.swing.JFrame {
     private void btnPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPlayMouseClicked
         // TODO add your handling code here:
         
-        if(selectedSong == null) {
+        if(selectedSong == null || selectedDifficulty == "-") {
 
             JOptionPane.showMessageDialog(
                     this,
-                    "Pilih lagu terlebih dahulu!"
+                    "Pilih lagu dan difficulty terlebih dahulu!"
             );
 
             return;
