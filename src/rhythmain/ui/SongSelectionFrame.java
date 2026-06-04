@@ -16,6 +16,8 @@ import javax.swing.BoxLayout;
 import javax.swing.border.CompoundBorder;
 import rhythmain.audio.AudioPlayer;
 import rhythmain.dao.ScoreDAO;
+import rhythmain.dao.UserStatDAO;
+import rhythmain.model.UserStat;
 import rhythmain.ui.ScoreCardPanel;
 import rhythmain.utils.UserSession;
 
@@ -36,12 +38,16 @@ public class SongSelectionFrame extends javax.swing.JFrame {
         loadSongs();
         loadLeaderboard();
         
+        UserStatDAO statDao = new UserStatDAO();
+        UserStat userStat = statDao.getUserStat(UserSession.userId);
+        
         lblSongTitle.setText("Pilih lagu terlebih dahulu...");
         lblSongArtist.setText("");
         lblSongCreator.setText("");
         songDuration.setText( "00:00");
         SongDifficulty.setText("");
         lblUsername.setText(UserSession.username);
+        lblLevel.setText("Level " + (userStat != null ? userStat.getLevel() : "0"));
         pnlLeaderboardContainer.setLayout(
                         new BoxLayout(
                                 pnlLeaderboardContainer,
