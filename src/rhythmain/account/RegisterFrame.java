@@ -7,6 +7,7 @@ package rhythmain.account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
+import rhythmain.dao.UserStatDAO;
 import rhythmain.utils.DBConnect;
 import rhythmain.ui.MainMenuFrame;
 import rhythmain.utils.UserSession;

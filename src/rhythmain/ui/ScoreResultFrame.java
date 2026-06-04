@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import rhythmain.dao.UserStatDAO;
 import rhythmain.utils.DBConnect;
 import rhythmain.utils.ScoreManager;
 import rhythmain.utils.UserSession;

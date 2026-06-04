@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import rhythmain.dao.UserStatDAO;
 import rhythmain.utils.DBConnect;
 import rhythmain.ui.MainMenuFrame;
 import rhythmain.utils.UserSession;
@@ -147,11 +148,15 @@ public class LoginFrame extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
+                int userId = rs.getInt("user_id");
+                
                 UserSession.userId
-                        = rs.getInt("user_id");
+                        = userId;
 
                 UserSession.username
                         = rs.getString("username");
+                
+                cekUserStat(userId);
 
                 JOptionPane.showMessageDialog(
                         null,
@@ -182,6 +187,13 @@ public class LoginFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void cekUserStat(int userId) {
+        UserStatDAO statDao = new UserStatDAO();
+        if (statDao.getUserStat(userId) == null) {
+            statDao.setUserStatBlank(userId);
+        }
+    }
+    
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
