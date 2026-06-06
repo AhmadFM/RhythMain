@@ -97,30 +97,30 @@ public class SongCardPanel extends JPanel {
 
     add(lblArtist);
 
-    JLabel lblDuration =
-            new JLabel(
-                    "03:00"
-            );
-
-    lblDuration.setBounds(
-            450,
-            20,
-            50,
-            25
-    );
-
-    lblDuration.setForeground(
-            Color.WHITE
-    );
-
-    lblDuration.setFont(
-            new Font(
-                    "Arial",
-                    Font.BOLD,
-                    18
-            )
-    );
-
-    add(lblDuration);
+//    JLabel lblDuration =
+//            new JLabel(
+//                    "03:00"
+//            );
+//
+//    lblDuration.setBounds(
+//            450,
+//            20,
+//            50,
+//            25
+//    );
+//
+//    lblDuration.setForeground(
+//            Color.WHITE
+//    );
+//
+//    lblDuration.setFont(
+//            new Font(
+//                    "Arial",
+//                    Font.BOLD,
+//                    18
+//            )
+//    );
+//
+//    add(lblDuration);
 }    
 }
