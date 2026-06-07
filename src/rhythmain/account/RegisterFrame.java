@@ -6,6 +6,7 @@ package rhythmain.account;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import rhythmain.dao.UserStatDAO;
 import rhythmain.utils.DBConnect;
@@ -25,6 +26,8 @@ public class RegisterFrame extends javax.swing.JFrame {
      */
     public RegisterFrame() {
         initComponents();
+        
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
     }
 
     /**
@@ -47,6 +50,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Register");
         setBackground(new java.awt.Color(0, 0, 0));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));

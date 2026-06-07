@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import rhythmain.audio.AudioPlayer;
@@ -90,6 +91,9 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         // Sembunyikan noteInfoText (Teks informasi buat Perfect, Miss, Offbeat)
         noteInfoText.setVisible(false);
         pausedText.setVisible(false);
+        
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
+        this.setTitle(song.getTitle());
 
         // Baca setting.
         bacaSetting();
@@ -390,6 +394,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         noteInfoText = new javax.swing.JLabel();
         skorText = new javax.swing.JLabel();
         pausedText = new javax.swing.JLabel();
+        stopButton = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -431,34 +436,40 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         pausedText.setForeground(new java.awt.Color(255, 255, 255));
         pausedText.setText("Paused");
 
+        stopButton.setText("Exit");
+        stopButton.addActionListener(this::stopButtonActionPerformed);
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(pausedText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(skorText)
-                .addContainerGap())
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(121, 121, 121)
                 .addComponent(noteInfoText)
                 .addContainerGap(646, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(pausedText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(skorText, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(stopButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(skorText))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(pausedText)))
+                .addGap(25, 25, 25)
+                .addComponent(pausedText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 420, Short.MAX_VALUE)
                 .addComponent(noteInfoText)
                 .addGap(59, 59, 59))
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(skorText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stopButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel6.add(jPanel10);
@@ -705,6 +716,14 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+        gameBerjalan = false;
+        audioPlayer.stop();
+        SongSelectionFrame frame = new SongSelectionFrame();
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_stopButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -729,6 +748,7 @@ public class GameplayFrame extends javax.swing.JFrame implements KeyListener {
     private javax.swing.JPanel senarKButton;
     private javax.swing.JLabel senarKButtonLabel;
     private javax.swing.JLabel skorText;
+    private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables
 
     @Override

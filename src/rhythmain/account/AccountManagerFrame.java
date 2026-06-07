@@ -7,6 +7,7 @@ package rhythmain.account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import rhythmain.utils.DBConnect;
@@ -28,6 +29,8 @@ public class AccountManagerFrame extends javax.swing.JFrame {
     public AccountManagerFrame() {
         initComponents();
         loadUser();
+        
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
     }
 
     private void loadUser() {
@@ -89,6 +92,7 @@ public class AccountManagerFrame extends javax.swing.JFrame {
         btnProfile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Account Manager");
 
         mainPanel.setBackground(new java.awt.Color(0, 0, 0));
         mainPanel.setMinimumSize(new java.awt.Dimension(0, 0));

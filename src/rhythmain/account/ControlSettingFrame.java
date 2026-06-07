@@ -7,6 +7,7 @@ package rhythmain.account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 
@@ -27,6 +28,8 @@ public class ControlSettingFrame extends javax.swing.JFrame {
     public ControlSettingFrame() {
         initComponents();
         loadControl();
+        
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
     }
 
     private void loadControl() {
@@ -114,6 +117,7 @@ public class ControlSettingFrame extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Control Setting");
         setBackground(new java.awt.Color(0, 0, 0));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));

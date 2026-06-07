@@ -7,6 +7,7 @@ package rhythmain.account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import rhythmain.dao.UserStatDAO;
 import rhythmain.model.UserStat;
@@ -28,6 +29,8 @@ public class PlayerStatisticFrame extends javax.swing.JFrame {
     public PlayerStatisticFrame() {
         initComponents();
         loadStatistic();
+        
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
     }
 
     private void loadStatistic() {
@@ -85,6 +88,7 @@ public class PlayerStatisticFrame extends javax.swing.JFrame {
         back = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Player Statistic");
         setBackground(new java.awt.Color(0, 0, 0));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));

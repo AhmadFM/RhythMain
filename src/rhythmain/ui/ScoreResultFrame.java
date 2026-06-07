@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.ImageIcon;
 import rhythmain.utils.DBConnect;
 import rhythmain.utils.ScoreManager;
 import rhythmain.utils.UserSession;
@@ -71,6 +72,8 @@ public class ScoreResultFrame extends javax.swing.JFrame {
         StoreScore(uid, idBeatmap);
         UpdateUserStats(uid);
         ShowLabel();
+        
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
     }
     
     public void  ShowBeatmapInfo(int idBeatmap){

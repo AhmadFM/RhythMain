@@ -7,6 +7,7 @@ package rhythmain.account;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
+import javax.swing.ImageIcon;
 import rhythmain.utils.DBConnect;
 import rhythmain.utils.UserSession;
 
@@ -23,6 +24,8 @@ public class ResetPasswordFrame extends javax.swing.JFrame {
      */
     public ResetPasswordFrame() {
         initComponents();
+        
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
     }
 
     /**
@@ -45,6 +48,7 @@ public class ResetPasswordFrame extends javax.swing.JFrame {
         back = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Reset Password");
         setBackground(new java.awt.Color(0, 0, 0));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));

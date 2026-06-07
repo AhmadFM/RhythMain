@@ -13,6 +13,7 @@ import rhythmain.ui.SongCardPanel;
 import java.sql.ResultSet;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.border.CompoundBorder;
 import rhythmain.audio.AudioPlayer;
 import rhythmain.dao.ScoreDAO;
@@ -54,6 +55,8 @@ public class SongSelectionFrame extends javax.swing.JFrame {
                                 BoxLayout.Y_AXIS
                         )
                 );
+        
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
     }
     private Song selectedSong = null;
     private String selectedDifficulty = "-";

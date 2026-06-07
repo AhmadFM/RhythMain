@@ -7,6 +7,7 @@ package rhythmain.account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.ImageIcon;
 import rhythmain.utils.DBConnect;
 import rhythmain.utils.UserSession;
 
@@ -40,6 +41,7 @@ public class ProfileSettingFrame extends javax.swing.JFrame {
 
         loadProfile();
 
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
     }
 
     /**
@@ -62,6 +64,7 @@ public class ProfileSettingFrame extends javax.swing.JFrame {
         back = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Profile Setting");
         setBackground(new java.awt.Color(0, 0, 0));
         setResizable(false);
 

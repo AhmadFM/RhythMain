@@ -5,6 +5,7 @@
 package rhythmain.ui;
 
 import java.awt.CardLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import rhythmain.account.AccountManagerFrame;
@@ -49,6 +50,8 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jLabel2.setText("Hallo " + UserSession.username);
         
         updateLogoutButtonVisibility();
+        
+        this.setIconImage(new ImageIcon("./assets/icon.png").getImage());
     }
     
     private void updateLogoutButtonVisibility(){
