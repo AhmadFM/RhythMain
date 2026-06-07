@@ -47,6 +47,16 @@ public class MainMenuFrame extends javax.swing.JFrame {
         cardLayout.show(mainContainer, "MainMenuPanel");
         
         jLabel2.setText("Hallo " + UserSession.username);
+        
+        updateLogoutButtonVisibility();
+    }
+    
+    private void updateLogoutButtonVisibility(){
+        if (UserSession.username != null && !UserSession.username.equalsIgnoreCase("Guest")) {
+            logoutButton.setVisible(true);
+        } else {
+            logoutButton.setVisible(false); 
+        }
     }
     
     public void switchPanel(String panelName){
@@ -72,10 +82,17 @@ public class MainMenuFrame extends javax.swing.JFrame {
         playButton = new javax.swing.JButton();
         accountButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("RhythMain - Rhythm Game Desktop");
         setBackground(new java.awt.Color(0, 0, 0));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -104,6 +121,11 @@ public class MainMenuFrame extends javax.swing.JFrame {
         settingsButton.setText("SETTINGS");
         settingsButton.addActionListener(this::settingsButtonActionPerformed);
 
+        logoutButton.setBackground(new java.awt.Color(242, 242, 242));
+        logoutButton.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        logoutButton.setText("LOGOUT");
+        logoutButton.addActionListener(this::logoutButtonActionPerformed);
+
         exitButton.setBackground(new java.awt.Color(242, 242, 242));
         exitButton.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         exitButton.setText("EXIT");
@@ -113,27 +135,27 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(155, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(judul)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(judul))
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
+                        .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(accountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(jLabel2)))
-                .addContainerGap(126, Short.MAX_VALUE))
+                            .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(153, 153, 153))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(45, 45, 45)
                 .addComponent(judul)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
@@ -144,8 +166,10 @@ public class MainMenuFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(settingsButton)
                 .addGap(18, 18, 18)
+                .addComponent(logoutButton)
+                .addGap(18, 18, 18)
                 .addComponent(exitButton)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,12 +211,41 @@ public class MainMenuFrame extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         // TODO add your handling code here:
-        if (bgmPlayer != null) {
-            bgmPlayer.stop();
-        }
-        System.exit(0);
+        konfirmasiKeluar();
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        // TODO add your handling code here:
+        int pilihan = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin logout?", "Konfirmasi Logout",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (pilihan == JOptionPane.YES_NO_OPTION){
+            UserSession.username = "Guest";
+            jLabel2.setText("Hallo, Guest");
+            updateLogoutButtonVisibility();
+            JOptionPane.showMessageDialog(this, "Anda berhasil logout", "info", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_logoutButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        konfirmasiKeluar();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void konfirmasiKeluar(){
+        int pilihan = JOptionPane.showConfirmDialog(this, 
+                "Apakah Anda yakin ingin keluar dari game RhythMain?", 
+                "Konfirmasi Keluar", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.WARNING_MESSAGE);
+        
+        if (pilihan == JOptionPane.YES_OPTION) {
+            if (bgmPlayer != null) {
+                bgmPlayer.stop();
+            }
+            System.exit(0);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -226,6 +279,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel judul;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JButton playButton;
     private javax.swing.JButton settingsButton;
     // End of variables declaration//GEN-END:variables
