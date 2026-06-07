@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import rhythmain.account.AccountManagerFrame;
 import rhythmain.account.ControlSettingFrame;
+import rhythmain.account.LoginFrame;
 import rhythmain.audio.AudioPlayer;
 import rhythmain.utils.BeatmapReader;
 import rhythmain.utils.Note;
@@ -223,9 +224,10 @@ public class MainMenuFrame extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         
         if (pilihan == JOptionPane.YES_NO_OPTION){
-            UserSession.username = "Guest";
-            jLabel2.setText("Hallo, Guest");
-            updateLogoutButtonVisibility();
+            LoginFrame frame = new LoginFrame();
+            frame.setVisible(true);
+            this.setVisible(false);
+            
             JOptionPane.showMessageDialog(this, "Anda berhasil logout", "info", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_logoutButtonActionPerformed
